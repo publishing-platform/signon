@@ -1,0 +1,38 @@
+<% content_for :title, current_user.has_2fa? ? "Use a new phone" : "Set up 2-Factor Authentication (2FA)" %>
+
+<div class="devgovuk-grid-row">
+  <div class="devgovuk-grid-column-two-thirds">
+    <% if current_user.has_2fa? %>
+      <div class="alert alert-warning" role="alert">
+        <span class="sr-only">Danger </span>Setting up a new phone will replace your existing one. You will only be able to sign in with your new phone.
+      </div>    
+    <% end %>
+
+    <p class="devgovuk-body-l">Make your Signon account more secure by setting up 2-Factor Authentication. You'll need to install an app on your phone which will generate a verification code to enter when you sign in.</p>
+
+    <h2 class="devgovuk-heading-m">1. Install a 2-Factor Authentication app on your phone</h2>
+    <p class="devgovuk-body">Install a 2-Factor Authentication app from the app store on your phone - for example, Google Authenticator or Microsoft Authenticator.</p>
+    
+    <h2 class="devgovuk-heading-m">2. Scan the barcode using your app</h2>
+    <p class="devgovuk-body">In your app add a new account and scan the barcode:</p> 
+    <p>
+      <%= image_tag(qr_code_data_uri, width: 180) %>    
+    </p> 
+    <p class="devgovuk-body">If you cannot use a barcode, you can enter a code instead. This is sometimes called a set-up key, a secret key, or an activation key. Enter this code when asked: <%= @otp_secret%></p>
+
+    <h2 class="devgovuk-heading-m">3. Enter the 2-Factor Authentication code shown in the app</h2>
+      <% if flash[:invalid_code].present? %>
+        <div class="alert alert-danger" role="alert">
+          <%= flash[:invalid_code] %>
+        </div>        
+      <% end %>    
+      <%= form_tag two_factor_authentication_path, method: :put do%>
+        <%= hidden_field_tag :otp_secret, @otp_secret%>
+
+        <%= label_tag :code, "Code from app" %>
+        <%= text_field_tag :code, nil, placeholder: "Enter 6-digit 2FA code" %>
+
+        <%= submit_tag current_user.has_2fa? ? "Finish replacing your phone" : "Finish set up" %>     
+      <% end %>        
+  </div>
+</div>

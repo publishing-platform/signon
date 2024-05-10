@@ -1,6 +1,24 @@
 Rails.application.routes.draw do
-  devise_for :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  devise_for :users, controllers: {
+    invitations: "users/invitations",
+    sessions: "users/sessions",
+    passwords: "users/passwords",
+    confirmations: "users/confirmations",
+  }
+
+  devise_scope :user do
+    put "users/confirmation" => "users/confirmations#update"
+    put "users/invitation/resend/:id" => "users/invitations#resend", :as => "resend_user_invitation"
+  end
+
+  resource :two_factor_authentication,
+           only: %i[show update],
+           path: "/users/two_factor_authentication",
+           controller: "users/two_factor_authentication" do
+    resource :session, only: %i[new create], controller: "users/two_factor_authentication_session"
+
+    member { get :prompt }
+  end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

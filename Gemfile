@@ -12,8 +12,12 @@ gem "jbuilder"
 gem "jsbundling-rails"
 gem "pg", "~> 1.1"
 gem "puma", ">= 5.0"
+gem "pundit", "~> 2.3"
+gem "rotp"
+gem "rqrcode"
 gem "sprockets-rails"
 gem "tzinfo-data", platforms: %i[mswin mswin64 mingw x64_mingw jruby]
+gem "uuid"
 
 group :development, :test do
   gem "debug", platforms: %i[mri mswin mswin64 mingw x64_mingw]

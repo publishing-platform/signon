@@ -1,0 +1,38 @@
+<%= f.label :email, "Email" %>
+<%= f.text_field :email %>
+
+<% if f.object.persisted? %>
+  <% if f.object.invited_but_not_yet_accepted? %>
+    <div class="alert alert-warning" role="alert">
+      <span class="sr-only">Danger </span>Changes will trigger a new signup email.
+    </div>
+  <% end %>
+<% end %>
+
+<%= f.label :name, "Name" %>
+<%= f.text_field :name %>
+
+<!-- 
+<% if policy(User).assign_role? %>
+  <div class="devgovuk-form-group">
+    <%= f.label :role, "Role" %>
+    <%= f.select :role, options_for_select(filtered_user_roles.map(&:humanize).zip(filtered_user_roles), f.object.role), {}, class: "devgovuk-select" %>
+  </div>
+<% end %>
+
+<% if policy(User).assign_organisations? %>
+  <div class="devgovuk-form-group">
+    <%= render "devgovuk_publishing_components/components/label", {
+      text: "Organisation",
+      html_for: "user_organisation_id"
+    } %>
+    <%= f.select :organisation_id, organisation_options(f), organisation_select_options, class: "tom-select" %>
+  </div>
+<% end %>
+
+<h2 class="devgovuk-heading-m">Permissions</h2>
+<% if policy(User).grant_permissions? %>  
+  <%= render partial: "shared/user_permissions", locals: { user_object: f.object }%>
+<% else %>
+  <%= render partial: "application_permissions", locals: { user_object: f.object }%>
+<% end %> -->

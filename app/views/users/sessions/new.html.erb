@@ -1,0 +1,21 @@
+<% content_for :title, "Sign in to Publishing Platform" %>
+
+<div class="devgovuk-grid-row">
+  <div class="devgovuk-grid-column-one-half">
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { autocomplete: 'on' }) do |f| %>
+
+      <%= f.label :email, "Email" %>
+      <%= f.email_field :email, autofocus: true, tabindex: 0 %>   
+
+      <%= f.label :password, "Password" %>
+      <%= f.password_field :password %>      
+
+      <%= f.submit "Sign in" %>
+
+    <% end %>
+
+    <p class="devgovuk-body">
+      <%= link_to t('devise.links.forgot_password'), new_password_path(resource_name), class: "devgovuk-link" %>
+    </p>
+  </div>
+</div>

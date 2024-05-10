@@ -23,7 +23,7 @@ class Users::TwoFactorAuthenticationController < ApplicationController
 private
 
   def otp_secret_uri
-    issuer = "DEVGOV.UK Signon"
+    issuer = "Publishing Platform Signon"
     if Rails.application.config.instance_name
       issuer = "#{Rails.application.config.instance_name.titleize} #{issuer}"
     end
