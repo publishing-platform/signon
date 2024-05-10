@@ -18,7 +18,7 @@ Rails.application.configure do
   config.server_timing = true
 
   # Allow requests for all domains e.g. <app>.dev.publishing-platform.co.uk
-  config.hosts.clear  
+  config.hosts.clear
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
@@ -28,7 +28,7 @@ Rails.application.configure do
 
     config.cache_store = :memory_store
     config.public_file_server.headers = {
-      "Cache-Control" => "public, max-age=#{2.days.to_i}"
+      "Cache-Control" => "public, max-age=#{2.days.to_i}",
     }
   else
     config.action_controller.perform_caching = false
