@@ -38,7 +38,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.1]
       ## Suspendable (in signon/lib/devise/models/suspendable.rb)
       t.datetime :suspended_at, precision: nil
       t.datetime :unsuspended_at, precision: nil
-      t.string :reason_for_suspension      
+      t.string :reason_for_suspension
 
       t.timestamps null: false
     end
