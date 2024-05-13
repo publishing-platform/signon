@@ -1,22 +1,81 @@
-<!DOCTYPE html>
 <html>
   <head>
-    <title>Signon</title>
+    <title><%= yield(:title) %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "application" %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
-  </head>
+    <%= stylesheet_link_tag "application" %>    
+  </head>  
+  <body>  
+    
+    <div class="container py-3">
+      <header>
+        <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
+          <a href="/" class="d-flex align-items-center link-body-emphasis text-decoration-none">
+            <span class="fs-4">Signon</span>
+          </a>
+    
+          <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+            <!-- <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#">Features</a>
+            <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#">Enterprise</a>
+            <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#">Support</a>
+            <a class="py-2 link-body-emphasis text-decoration-none" href="#">Pricing</a> -->
+          </nav>
+        </div>  
+      </header>
+    
+      <main>
+        <% if flash["notice"].present? %>
+          <p class="alert alert-primary"><%= notice %></p>
+        <% end %>
+        <% if flash["alert"].present? %>
+          <p class="alert alert-danger"><%= alert %></p>
+        <% end %>  
 
-  <body>
-    <% if flash["notice"].present? %>
-      <p class="notice"><%= notice %></p>
-    <% end %>
-    <% if flash["alert"].present? %>
-      <p class="alert"><%= alert %></p>
-    <% end %>    
-    <%= yield %>
+        <div class="pb-md-4">
+          <%= yield(:context) %>
+          <h1 class="display-4 fw-normal text-body-emphasis"><%= yield(:title) %></h1>
+          <!-- <p class="fs-5 text-body-secondary">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It’s built with default Bootstrap components and utilities with little customization.</p> -->
+        </div>     
+
+        <%= yield %>        
+      </main>
+    
+      <!-- <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+          <div class="col-6 col-md">
+            <h5>Features</h5>
+            <ul class="list-unstyled text-small">
+              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Cool stuff</a></li>
+              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Random feature</a></li>
+              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Team feature</a></li>
+              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Stuff for developers</a></li>
+              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Another one</a></li>
+              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Last time</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md">
+            <h5>Resources</h5>
+            <ul class="list-unstyled text-small">
+              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Resource</a></li>
+              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Resource name</a></li>
+              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Another resource</a></li>
+              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Final resource</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md">
+            <h5>About</h5>
+            <ul class="list-unstyled text-small">
+              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Team</a></li>
+              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Locations</a></li>
+              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Privacy</a></li>
+              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Terms</a></li>
+            </ul>
+          </div>
+        </div>
+      </footer> -->
+    </div>  
+    <%= javascript_include_tag "application" %>      
   </body>
 </html>

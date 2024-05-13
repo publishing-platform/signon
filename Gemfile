@@ -15,8 +15,10 @@ gem "puma", ">= 5.0"
 gem "pundit", "~> 2.3"
 gem "rotp"
 gem "rqrcode"
+gem "sassc-rails"
 gem "sprockets-rails"
 gem "tzinfo-data", platforms: %i[mswin mswin64 mingw x64_mingw jruby]
+gem "uglifier"
 gem "uuid"
 
 group :development, :test do
