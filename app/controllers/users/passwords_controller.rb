@@ -31,4 +31,21 @@ class Users::PasswordsController < Devise::PasswordsController
   # def after_sending_reset_password_instructions_path_for(resource_name)
   #   super(resource_name)
   # end
+
+  def edit
+    super
+
+    user = user_from_params
+    unless user && user.reset_password_period_valid?
+      render "users/passwords/reset_error"
+    end
+  end  
+
+private
+
+  def user_from_params
+    token = Devise.token_generator.digest(self, :reset_password_token, params[:reset_password_token])
+    User.find_by(reset_password_token: token)
+  end
+
 end

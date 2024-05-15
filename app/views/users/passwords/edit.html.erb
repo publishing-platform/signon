@@ -1,7 +1,7 @@
 <% content_for :title, "Change your password" %>
 
-<div class="devgovuk-grid-row">
-  <div class="devgovuk-grid-column-two-thirds">
+<div class="row">
+  <div class="col-xs-12 col-md-6">
     <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
       <%= f.hidden_field :reset_password_token %>
       <%= render partial: "users/passwords/change_password_panel", locals: { f: f } %>      

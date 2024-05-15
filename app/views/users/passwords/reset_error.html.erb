@@ -1,0 +1,12 @@
+<% content_for :title, "Sorry, this link doesn't work" %>
+
+<div class="row">
+  <div class="col-xs-12 col-md-6">
+    <p>
+      This link to set a new password doesn't work. It may be that the link you
+      were using has expired or was invalid.
+    </p>
+
+    <%= link_to "Try again", new_user_password_path, class: "btn btn-primary" %>
+  </div>
+</div>
