@@ -1,16 +1,23 @@
 <% content_for :title, "Forgot your password?" %>
 <% content_for :back_link, new_session_path(resource_name) %>
 
-<div class="devgovuk-grid-row">
-  <div class="devgovuk-grid-column-one-half">
-    <p class="devgovuk-body">
+<div class="row">
+  <div class="col-xs-12 col-md-6">
+    <p>
       We'll send you an email to create a new password.
     </p>
 
     <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-      <%= f.label :email, "Email address" %>
-      <%= f.text_field :email %>    
+    
+      <div class="mb-3">
+        <%= f.label :email, "Email address", class: "form-label" %>
+        <%= f.text_field :email, class: "form-control", aria: { describedby: (resource.errors.has_key?(:email) ? "email-errors" : nil) } %>    
+        <%= render "components/errors", {
+          attribute: :email,
+        } %>
+      </div>      
 
-      <%= f.submit "Send email" %>
+      <%= f.submit "Send email", class: "btn btn-primary" %>
     <% end %>
+  </div>
 </div>

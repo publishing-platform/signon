@@ -44,5 +44,9 @@ module Signon
     # to use CSS that has same function names as SCSS such as max.
     # https://github.com/alphagov/govuk-frontend/issues/1350
     config.assets.css_compressor = nil      
+
+    config.action_view.field_error_proc = Proc.new { |html_tag, instance| 
+      html_tag.gsub("form-control", "form-control is-invalid").html_safe
+    }    
   end
 end

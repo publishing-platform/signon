@@ -1,0 +1,12 @@
+<%
+  attribute ||= nil
+  id = "#{attribute}-errors"
+%>
+
+<% if resource.errors.has_key?(attribute) %>
+  <%= tag.div id: id, class: "invalid-feedback" do %>
+    <% resource.errors.full_messages_for(attribute).each do |error| %>
+      <%= error %>
+    <% end %>  
+  <% end %>
+<% end %>
