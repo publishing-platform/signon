@@ -4,7 +4,7 @@
 <% if f.object.persisted? %>
   <% if f.object.invited_but_not_yet_accepted? %>
     <div class="alert alert-warning" role="alert">
-      <span class="sr-only">Danger </span>Changes will trigger a new signup email.
+      <span class="visually-hidden">Danger </span>Changes will trigger a new signup email.
     </div>
   <% end %>
 <% end %>
@@ -12,6 +12,7 @@
 <%= f.label :name, "Name" %>
 <%= f.text_field :name %>
 
+<% if false %>
 <!-- 
 <% if policy(User).assign_role? %>
   <div class="devgovuk-form-group">
@@ -36,3 +37,4 @@
 <% else %>
   <%= render partial: "application_permissions", locals: { user_object: f.object }%>
 <% end %> -->
+<% end %>

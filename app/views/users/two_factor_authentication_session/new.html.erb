@@ -1,13 +1,20 @@
 <% content_for :title, "2-Factor Authentication (2FA)" %>
 
-<div class="devgovuk-grid-row devgovuk-!-margin-bottom-5">
-    <div class="devgovuk-grid-column-one-half">
+<div class="row">
+  <div class="col-xs-12 col-md-6">
       <%= form_tag(two_factor_authentication_session_path, method: :post) do %>
+        <div class="mb-3">
+          <%= label_tag :code, "Your 2FA code", class: "form-label" %>
+          <%= text_field_tag :code, 
+                              nil, 
+                              placeholder: "Enter 6-digit 2FA code", 
+                              autocomplete: "off", 
+                              tabindex: 0,
+                              class: "form-control" %>
+        </div>      
+  
+        <%= submit_tag "Sign in", class: "btn btn-primary" %>
 
-        <%= label_tag :code, "Your 2FA code" %>
-        <%= text_field_tag :code, nil, placeholder: "Enter 6-digit 2FA code", autocomplete: "off", tabindex: 0 %>
-
-        <%= submit_tag "Sign in" %>
       <% end %>
     </div>
   </div>

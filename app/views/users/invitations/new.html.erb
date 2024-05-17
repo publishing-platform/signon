@@ -2,8 +2,8 @@
   content_for :title, t("devise.invitations.new.header")
 %>
 
-<div class="devgovuk-grid-row">
-  <div class="devgovuk-grid-column-two-thirds">
+<div class="row">
+  <div class="col-xs-12 col-md-6">
   <%= form_for(resource, as: resource_name, url: invitation_path(resource_name), html: { method: :post }) do |f| %>
     <%= render partial: "users/form_fields", locals: { f: f } %>
 
