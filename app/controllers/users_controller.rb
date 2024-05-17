@@ -65,6 +65,30 @@ class UsersController < ApplicationController
     redirect_back_or_to(root_path)
   end  
 
+  def edit_suspension
+    @user = User.find(params[:id])
+    authorize @user
+
+    @suspension = Suspension.new(suspend: @user.suspended?, reason_for_suspension: @user.reason_for_suspension)
+  end
+
+  def update_suspension
+    @user = User.find(params[:id])
+    authorize @user
+
+    @suspension = Suspension.new(suspend: params[:user][:suspended] == "1",
+                                 reason_for_suspension: params[:user][:reason_for_suspension],
+                                 user: @user)
+
+    if @suspension.save
+      notice = "#{@user.email} is now #{@user.suspended? ? 'suspended' : 'active'}."
+
+      redirect_to @user.api_user? ? edit_api_user_path(@user) : edit_user_path(@user), notice:
+    else
+      render :edit_suspension
+    end
+  end  
+
 private
 
   def filter_users

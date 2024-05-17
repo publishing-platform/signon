@@ -1,0 +1,28 @@
+<% content_for :title, "Suspend #{@user.name}" %>
+
+<%= form_tag update_suspension_user_path(@user), method: "patch" do %>
+  <p>
+    After the user has been unsuspended, they will need to reset their password.
+  </p>
+
+  <div class="form-check mb-3">
+    <%= check_box :user, :suspended?, class: "form-check-input" %>
+    <%= label :user, :suspended?, "Suspended?", class: "form-label" %>
+  </div>  
+
+  <div class="mb-3">
+    <%= label :user, :reason_for_suspension, "Reason for suspension", class: "form-label" %>
+    <%
+      css_classes = %w(form-control)
+      css_classes << "is-invalid" if @suspension.errors.has_key?(:reason_for_suspension)
+    %>
+    <%= text_field :user, :reason_for_suspension, class: css_classes, aria: { describedby: (@suspension.errors.has_key?(:reason_for_suspension) ? "reason_for_suspension-errors" : nil) } %>    
+    <%= render "components/errors", {
+      attribute: :reason_for_suspension,
+      resource: @suspension
+    } %>
+  </div>      
+
+  <%= submit_tag "Save", class: "btn btn-primary" %>
+  
+<% end %>
