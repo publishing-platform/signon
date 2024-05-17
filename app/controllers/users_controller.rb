@@ -89,6 +89,14 @@ class UsersController < ApplicationController
     end
   end
 
+  def unlock
+    @user = User.find(params[:id])
+    authorize @user
+
+    @user.unlock_access!
+    redirect_back_or_to root_path, notice: "Unlocked #{@user.email}"
+  end
+
 private
 
   def filter_users
