@@ -17,7 +17,7 @@ class UsersController < ApplicationController
     authorize @user
 
     # @application_permissions = assigned_applications_and_permissions_for(@user)
-  end  
+  end
 
   def update
     @user = User.find(params[:id])
@@ -28,7 +28,7 @@ class UsersController < ApplicationController
     else
       render :edit
     end
-  end  
+  end
 
   def resend_email_change
     @user = User.find(params[:id])
@@ -63,7 +63,7 @@ class UsersController < ApplicationController
     end
 
     redirect_back_or_to(root_path)
-  end  
+  end
 
   def edit_suspension
     @user = User.find(params[:id])
@@ -87,7 +87,7 @@ class UsersController < ApplicationController
     else
       render :edit_suspension
     end
-  end  
+  end
 
 private
 
@@ -105,7 +105,7 @@ private
   def paginate_users
     page = params.fetch(:page, 1).to_i
     @users = @users.page(page).per(10)
-  end  
+  end
 
   def filter_params
     params.permit(:name, :role, :status, :organisation)
@@ -130,5 +130,5 @@ private
 
   def current_user_role
     current_user.role.to_sym
-  end  
+  end
 end

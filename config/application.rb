@@ -43,10 +43,10 @@ module Signon
     # (once to build, once to compress) which breaks the usage of "unquote"
     # to use CSS that has same function names as SCSS such as max.
     # https://github.com/alphagov/govuk-frontend/issues/1350
-    config.assets.css_compressor = nil      
+    config.assets.css_compressor = nil
 
-    config.action_view.field_error_proc = Proc.new { |html_tag, instance| 
+    config.action_view.field_error_proc = proc do |html_tag, _instance|
       html_tag.gsub("form-control", "form-control is-invalid").html_safe
-    }    
+    end
   end
 end

@@ -39,7 +39,7 @@ class Users::PasswordsController < Devise::PasswordsController
     unless user && user.reset_password_period_valid?
       render "users/passwords/reset_error"
     end
-  end  
+  end
 
 private
 
@@ -47,5 +47,4 @@ private
     token = Devise.token_generator.digest(self, :reset_password_token, params[:reset_password_token])
     User.find_by(reset_password_token: token)
   end
-
 end

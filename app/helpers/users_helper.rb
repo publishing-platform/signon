@@ -12,5 +12,4 @@ module UsersHelper
   def organisation_select_options
     { include_blank: "" }
   end
-
 end
