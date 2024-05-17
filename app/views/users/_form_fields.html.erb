@@ -1,5 +1,11 @@
-<%= f.label :email, "Email" %>
-<%= f.text_field :email %>
+<div class="mb-3">
+  <%= f.label :email, "Email", class: "form-label" %>
+  <%= f.text_field :email, class: "form-control", aria: { describedby: (resource.errors.has_key?(:email) ? "email-errors" : nil) } %>    
+  <%= render "components/errors", {
+    attribute: :email,
+    resource:
+  } %>
+</div>
 
 <% if f.object.persisted? %>
   <% if f.object.invited_but_not_yet_accepted? %>
@@ -9,28 +15,40 @@
   <% end %>
 <% end %>
 
-<%= f.label :name, "Name" %>
-<%= f.text_field :name %>
+<div class="mb-3">
+  <%= f.label :name, "Name", class: "form-label" %>
+  <%= f.text_field :name, class: "form-control", aria: { describedby: (resource.errors.has_key?(:name) ? "name-errors" : nil) } %>    
+  <%= render "components/errors", {
+    attribute: :name,
+    resource:
+  } %>
+</div>   
+
+<% if policy(User).assign_role? %>
+  <div class="mb-3">
+    <%= f.label :role, "Role", class: "form-label" %>     
+    <%= f.select :role, 
+        options_for_select(filtered_user_roles.map(&:humanize).zip(filtered_user_roles), f.object.role), 
+        {}, 
+        class: "form-control", 
+        aria: { describedby: (resource.errors.has_key?(:role) ? "role-errors" : nil) } 
+    %>
+    <%= render "components/errors", {
+      attribute: :role,
+      resource:
+    } %>
+  </div>  
+<% end %> 
+
+<% if policy(User).assign_organisations? %>
+  <div class="mb-3">
+    <%= f.label :organisation_id, "Organisation", class: "form-label" %> 
+    <%= f.select :organisation_id, organisation_options(f), organisation_select_options, class: "form-control" %>
+  </div>
+<% end %>
 
 <% if false %>
 <!-- 
-<% if policy(User).assign_role? %>
-  <div class="devgovuk-form-group">
-    <%= f.label :role, "Role" %>
-    <%= f.select :role, options_for_select(filtered_user_roles.map(&:humanize).zip(filtered_user_roles), f.object.role), {}, class: "devgovuk-select" %>
-  </div>
-<% end %>
-
-<% if policy(User).assign_organisations? %>
-  <div class="devgovuk-form-group">
-    <%= render "devgovuk_publishing_components/components/label", {
-      text: "Organisation",
-      html_for: "user_organisation_id"
-    } %>
-    <%= f.select :organisation_id, organisation_options(f), organisation_select_options, class: "tom-select" %>
-  </div>
-<% end %>
-
 <h2 class="devgovuk-heading-m">Permissions</h2>
 <% if policy(User).grant_permissions? %>  
   <%= render partial: "shared/user_permissions", locals: { user_object: f.object }%>

@@ -1,19 +1,22 @@
 <% content_for :title, "Confirm change of email address" %>
 
-<div class="devgovuk-grid-row">
-  <div class="devgovuk-grid-column-two-thirds">
-    <p>
-      Please enter your password to confirm the change of email address from
-      <strong><%= resource.email %></strong> to <strong><%= resource.unconfirmed_email %></strong>.
-    </p>
+<p>
+  Please enter your password to confirm the change of email address from
+  <strong><%= resource.email %></strong> to <strong><%= resource.unconfirmed_email %></strong>.
+</p>
+
+<div class="row">
+  <div class="col-xs-12 col-md-6">
 
     <%= form_for resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :put } do |f| %>
       <%= hidden_field_tag :confirmation_token, params[:confirmation_token] %>
 
-      <%= f.label :password, "Your password" %>
-      <%= f.password_field :password %>
+      <div class="mb-3">
+        <%= f.label :password, "Your password", class: "form-label" %>
+        <%= f.password_field :password, class: "form-control" %>    
+      </div>   
 
-      <%= f.submit "Confirm change" %>
+      <%= f.submit "Confirm change", class: "btn btn-primary" %>
     <% end %>
   </div>
 </div>

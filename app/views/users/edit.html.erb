@@ -1,0 +1,57 @@
+<% content_for :title, "Edit #{@user.name}" %>
+
+<p>
+  User <strong><%= @user.status %></strong> &bull;
+  <%= link_to "#{@user.suspended? ? "Uns" : "S"}uspend user", edit_suspension_user_path(@user) %>
+</p>
+
+<% if @user.suspended? and @user.reason_for_suspension.present? %>
+  <div class="alert alert-warning" role="alert">
+    <h2 class="alert-heading h4">User suspended</h4>
+    <em><%= @user.reason_for_suspension %></em>
+  </div>
+<% end %>
+
+<% if @user.invited_but_not_yet_accepted? %>
+  <div class="alert alert-warning" role="alert">
+    <h2 class="alert-heading h4">Invitation not accepted yet</h4>
+    <p>This user hasn't clicked on the link in their signup mail yet.</p>
+    <%= form_tag resend_user_invitation_path(@user), method: :put do %>
+      <%= submit_tag "Resend signup email", class: "btn btn-primary" %>     
+    <% end %>       
+  </div>
+<% end %>
+
+<% if @user.access_locked? %>
+  <div class="alert alert-warning" role="alert">
+    <h2 class="alert-heading h4">Account locked</h4>
+    <p>Account has been locked after too many unsuccessful login attempts.</p>
+    <p>Locked accounts are automatically unlocked after 1 hour.</p>
+    <%= form_tag unlock_user_path(@user), method: :patch do %>
+      <%= submit_tag "Unlock account", class: "btn btn-primary" %>
+    <% end %>        
+  </div>
+<% end %>
+
+
+<% if @user.unconfirmed_email.present? %>
+  <div class="alert alert-warning" role="alert">
+    <h2 class="alert-heading h4">Pending email change</h4>
+    <p>An email has been sent to <strong><%= @user.unconfirmed_email %></strong> with a link to confirm the change.</p>
+
+    <%= form_tag resend_email_change_user_path(@user), method: :put, class: "d-md-inline-block" do %>
+      <%= submit_tag "Resend confirmation email", class: "btn btn-primary" %>     
+    <% end %>  
+    
+    <%= form_tag cancel_email_change_user_path(@user), method: :delete, class: "d-md-inline-block" do %>
+      <%= submit_tag "Cancel email change", class: "btn btn-danger" %>  
+    <% end %>    
+  </div>
+<% end %>
+
+
+<%= form_for @user do |f| %>
+  <%= render partial: "form_fields", locals: { f: f, resource: @user } %>
+
+  <%= f.submit "Save user", class: "btn btn-primary" %>
+<% end %>
