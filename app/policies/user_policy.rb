@@ -42,7 +42,7 @@ private
   class Scope < BasePolicy::Scope
     def resolve
       if current_user.admin?
-        scope.all
+        scope.web_users
       else
         scope.none
       end

@@ -1,0 +1,36 @@
+<table class="table">
+  <caption class="visually-hidden">User list</caption>
+  <thead>
+    <tr>
+      <th scope="col">Name and email</th>
+      <th scope="col">Role</th>
+      <th scope="col">Organisation</th>
+      <th scope="col">Sign-in count</th>
+      <th scope="col">Last sign-in</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>  
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td>
+          <%= user.unusable_account? ? "<del>".html_safe : "" %>
+          <%= link_to "#{user.name}", edit_user_path(user) %>
+          <%= user.unusable_account? ? "</del>".html_safe : "" %>
+          <br><small><%= user.email %></small>        
+        </td>
+        <td><%= user.role.humanize %></td>
+        <td><%= user.organisation.try(:name) %></td>
+        <td><%= user.sign_in_count %></td>
+        <td>
+          <% if user.current_sign_in_at %>
+            <%= time_ago_in_words(user.current_sign_in_at) %> ago
+          <% else %>
+            never signed in
+          <% end %>
+        </td>
+        <td><%= user.status.humanize %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

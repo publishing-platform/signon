@@ -1,0 +1,21 @@
+<%
+  navigation_items ||= []
+%>
+
+<% if navigation_items.any? %>
+  <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+    <% navigation_items.each_with_index do |item, index| %>
+      <%
+        link_classes = %w(py-2 link-body-emphasis text-decoration-none)
+        link_classes << "me-3" unless index == navigation_items.size() -1
+      %>
+      <li>
+        <%= link_to(
+          item[:text],
+          item[:href],
+          class: link_classes 
+        ) %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>     

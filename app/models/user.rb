@@ -32,12 +32,33 @@ class User < ApplicationRecord
   validates :reason_for_suspension, presence: true, if: proc { |u| u.suspended? }
 
   # associations
-  # belongs_to :organisation, optional: true
+  belongs_to :organisation, optional: true
   # has_many :users_permissions
   # has_many :permissions, through: :users_permissions
 
   # hooks
   after_initialize :generate_uid
+
+  # scopes
+  scope :web_users, -> { where(api_user: false) }
+  scope :filter_by_name, ->(name) { where("users.email like ? OR users.name like ?", "%#{name.strip}%", "%#{name.strip}%") }
+  scope :with_role, ->(role_name) { where(role: role_name) }
+  scope :with_organisation, ->(org_id) { where(organisation_id: org_id) }
+  scope :with_status, lambda { |status|
+    case status
+    when USER_STATUS_SUSPENDED
+      where.not(suspended_at: nil)
+    when USER_STATUS_INVITED
+      where.not(invitation_sent_at: nil).where(invitation_accepted_at: nil)
+    when USER_STATUS_LOCKED
+      where.not(locked_at: nil)
+    when USER_STATUS_ACTIVE
+      where(suspended_at: nil, locked_at: nil)
+        .and(where(invitation_sent_at: nil).or(where.not(invitation_accepted_at: nil)))
+    else
+      raise NotImplementedError, "Filtering by status '#{status}' not implemented."
+    end
+  }
 
   def generate_uid
     self.uid ||= UUID.generate

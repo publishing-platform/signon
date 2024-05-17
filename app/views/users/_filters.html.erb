@@ -1,0 +1,41 @@
+<%= form_tag(users_path, method: :get) do %>
+
+  <div class="mb-3">
+    <%= label_tag :name, "Name or email", class: "form-label" %>
+    <%= search_field_tag :name, nil, value: @filter_params[:name], class: "form-control" %>    
+  </div>   
+
+  <div class="mb-3">
+    <%= label_tag :role, "Role", class: "form-label" %>
+    <%= select_tag "role", 
+      options_for_select(filtered_user_roles.map(&:humanize).zip(filtered_user_roles), @filter_params[:role]), 
+      include_blank: true, 
+      id: "role",
+      class: "form-control" %> 
+  </div>  
+
+  <div class="mb-3">
+    <%= label_tag :status, "Status", class: "form-label" %>
+    <%= select_tag "status", 
+      options_for_select(User::USER_STATUSES.map(&:humanize).zip(User::USER_STATUSES), @filter_params[:status]), 
+      include_blank: true, 
+      id: "status",
+      class: "form-control" %>        
+  </div>    
+
+  <div class="mb-3">
+    <%= label_tag :organisation, "Organisation", class: "form-label" %>
+    <%= select_tag "organisation", 
+      options_for_select(filtered_organisations, @filter_params[:organisation]), 
+      include_blank: true, 
+      id: "organisation",
+      class: "form-control" %>      
+  </div>    
+
+  <%= submit_tag "Filter", class: "btn btn-primary mb-3" %>  
+
+  <p>
+    <%= link_to "Clear all filters",
+                users_path %>
+  </p>  
+<% end %>

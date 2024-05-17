@@ -10,19 +10,13 @@
   <body>  
     
     <div class="container py-3">
-      <header>
-        <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
+      <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <div class="col-md-3 mb-2 mb-md-0">
           <a href="/" class="d-flex align-items-center link-body-emphasis text-decoration-none">
             <span class="fs-4">Signon</span>
           </a>
-    
-          <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-            <!-- <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#">Features</a>
-            <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#">Enterprise</a>
-            <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#">Support</a>
-            <a class="py-2 link-body-emphasis text-decoration-none" href="#">Pricing</a> -->
-          </nav>
-        </div>  
+        </div>
+        <%= render "components/navigation", { navigation_items: }%>
       </header>
     
       <main>
@@ -34,13 +28,18 @@
         <% end %>  
 
         <div class="row">
-          <div class="col-xs-12 col-md-8">
+          <div class="col-xs-12 <%= yield(:top_right).present? ? 'col-md-6' : 'col-md-8' %>">
             <div class="pb-md-4">
               <%= yield(:context) %>
               <h1><%= yield(:title) %></h1>
               <!-- <p class="fs-5 text-body-secondary">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It’s built with default Bootstrap components and utilities with little customization.</p> -->
-            </div>     
+            </div>               
           </div>
+          <% if yield(:top_right).present? %>
+            <div class="col-xs-12 col-md-6">
+              <%= yield(:top_right) %>
+            </div>
+          <% end %>             
         </div>
 
         <%= yield %>        
