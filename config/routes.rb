@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  use_doorkeeper
+  use_doorkeeper do
+    skip_controllers :applications, :authorized_applications, :token_info
+  end
+
   devise_for :users, controllers: {
     invitations: "users/invitations",
     sessions: "users/sessions",
@@ -33,6 +36,10 @@ Rails.application.routes.draw do
       patch :unlock
     end
   end
+
+  resources :oauth_applications, except: %i[show destroy] do
+    resources :permissions, except: %i[show destroy]
+  end  
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

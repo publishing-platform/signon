@@ -1,0 +1,18 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+    </tr>
+  </thead>  
+  <tbody>
+    <% @applications.each do |application| %>
+      <tr>
+        <td>
+          <%= link_to(application.name, edit_oauth_application_path(application)) %>     
+        </td>
+        <td><%= application.description %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

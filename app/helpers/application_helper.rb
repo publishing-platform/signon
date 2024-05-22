@@ -12,9 +12,9 @@ module ApplicationHelper
       items << { text: "Users", href: users_path, active: is_current?(users_path) }
     end
 
-    # if policy(OauthApplication).index?
-    #   items << { text: "Apps", href: oauth_applications_path, active: is_current?(oauth_applications_path) }
-    # end
+    if policy(OauthApplication).index?
+      items << { text: "Apps", href: oauth_applications_path, active: is_current?(oauth_applications_path) }
+    end
 
     items << { text: current_user.name, href: user_link_target }
     items << { text: "Sign out", href: destroy_user_session_path }

@@ -50,8 +50,12 @@
 <% end %>
 
 
-<%= form_for @user do |f| %>
-  <%= render partial: "form_fields", locals: { f: f, resource: @user } %>
+<div class="row">
+  <div class="col-xs-12 col-md-6">
+    <%= form_for @user do |f| %>
+      <%= render partial: "form_fields", locals: { f: f, resource: @user } %>
 
-  <%= f.submit "Save user", class: "btn btn-primary" %>
-<% end %>
+      <%= f.submit "Save user", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

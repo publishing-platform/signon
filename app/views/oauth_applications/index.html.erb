@@ -1,0 +1,25 @@
+<% content_for :title, "Applications" %>
+
+<% content_for :top_right do %>
+  <div class="index-button-group">
+    <%= link_to "Create application", new_oauth_application_path, class: "btn btn-primary mb-3" %>
+  </div>
+<% end %>
+
+<ul class="nav nav-tabs mb-3" id="application-tabs" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="active-tab" data-bs-toggle="tab" data-bs-target="#active-tab-pane" type="button" role="tab" aria-controls="active-tab-pane" aria-selected="true">Active applications</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="retired-tab" data-bs-toggle="tab" data-bs-target="#retired-tab-pane" type="button" role="tab" aria-controls="retired-tab-pane" aria-selected="false">Retired applications</button>
+  </li>
+</ul>
+
+<div class="tab-content" id="application-tabs-content">
+  <div class="tab-pane fade show active" id="active-tab-pane" role="tabpanel" aria-labelledby="active-tab" tabindex="0">
+    <%= render("application_list", applications: @applications.reject(&:retired?)) %>
+  </div>
+  <div class="tab-pane fade" id="retired-tab-pane" role="tabpanel" aria-labelledby="retired-tab" tabindex="0">
+    <%= render("application_list", applications: @applications.select(&:retired?)) %>
+  </div>
+</div>
