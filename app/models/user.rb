@@ -33,8 +33,8 @@ class User < ApplicationRecord
 
   # associations
   belongs_to :organisation, optional: true
-  # has_many :users_permissions
-  # has_many :permissions, through: :users_permissions
+  has_many :users_permissions
+  has_many :permissions, through: :users_permissions
 
   # hooks
   after_initialize :generate_uid
@@ -90,6 +90,18 @@ class User < ApplicationRecord
   def unusable_account?
     invited_but_not_yet_accepted? || suspended? || access_locked?
   end
+
+  def grant_permission(permission)
+    users_permissions.where(permission_id: permission.id).first_or_create!.permission
+  end
+
+  def permission_ids_for(application)
+    permissions.where(oauth_application_id: application.id).pluck(:id)
+  end
+
+  def has_access_to?(application)
+    users_permissions.exists?(permission_id: application.signin_permission.id)
+  end  
 
   def status
     if suspended?

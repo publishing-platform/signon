@@ -11,12 +11,13 @@ class CreateDoorkeeperTables < ActiveRecord::Migration[7.1]
       # that doesn't require redirect URI to be used during authorization
       # like Client Credentials flow or Resource Owner Password.
       t.text    :redirect_uri, null: false
-      t.string  :scopes,       null: false, default: ''
+      t.string  :scopes,       null: false, default: ""
       t.boolean :confidential, null: false, default: true
       t.timestamps             null: false
     end
 
     add_index :oauth_applications, :uid, unique: true
+    add_index :oauth_applications, :name, unique: true
 
     create_table :oauth_access_grants do |t|
       t.references :resource_owner,  null: false
@@ -24,7 +25,7 @@ class CreateDoorkeeperTables < ActiveRecord::Migration[7.1]
       t.string   :token,             null: false
       t.integer  :expires_in,        null: false
       t.text     :redirect_uri,      null: false
-      t.string   :scopes,            null: false, default: ''
+      t.string   :scopes,            null: false, default: ""
       t.datetime :created_at,        null: false
       t.datetime :revoked_at
     end
@@ -33,7 +34,7 @@ class CreateDoorkeeperTables < ActiveRecord::Migration[7.1]
     add_foreign_key(
       :oauth_access_grants,
       :oauth_applications,
-      column: :application_id
+      column: :application_id,
     )
 
     create_table :oauth_access_tokens do |t|
@@ -75,6 +76,7 @@ class CreateDoorkeeperTables < ActiveRecord::Migration[7.1]
 
     add_index :oauth_access_tokens, :token, unique: true
 
+    # rubocop:disable Rails/ReversibleMigration
     # See https://github.com/doorkeeper-gem/doorkeeper/issues/1592
     if ActiveRecord::Base.connection.adapter_name == "SQLServer"
       execute <<~SQL.squish
@@ -84,15 +86,16 @@ class CreateDoorkeeperTables < ActiveRecord::Migration[7.1]
     else
       add_index :oauth_access_tokens, :refresh_token, unique: true
     end
+    # rubocop:enable Rails/ReversibleMigration
 
     add_foreign_key(
       :oauth_access_tokens,
       :oauth_applications,
-      column: :application_id
+      column: :application_id,
     )
 
     # Uncomment below to ensure a valid reference to the resource owner's table
-    # add_foreign_key :oauth_access_grants, <model>, column: :resource_owner_id
-    # add_foreign_key :oauth_access_tokens, <model>, column: :resource_owner_id
+    add_foreign_key :oauth_access_grants, :users, column: :resource_owner_id
+    add_foreign_key :oauth_access_tokens, :users, column: :resource_owner_id
   end
 end
