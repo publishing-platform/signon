@@ -89,6 +89,16 @@ class UsersController < ApplicationController
     end
   end
 
+  def reset_2fa
+    @user = User.find(params[:id])
+    authorize @user
+
+    @user.reset_2fa!
+    UserMailer.two_factor_reset(@user).deliver_later
+
+    redirect_back_or_to root_path, notice: "Reset 2-Factor Authentication (2FA) for #{@user.email}"
+  end
+
   def unlock
     @user = User.find(params[:id])
     authorize @user

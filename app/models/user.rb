@@ -74,6 +74,12 @@ class User < ApplicationRecord
     otp_secret.present?
   end
 
+  def reset_2fa!
+    self.otp_secret = nil
+    self.require_2fa = true
+    save!
+  end
+
   def authenticate_otp(code)
     totp = ROTP::TOTP.new(otp_secret)
     totp.verify(code, drift_behind: MAX_2FA_DRIFT_SECONDS)

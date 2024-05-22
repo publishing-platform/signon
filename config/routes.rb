@@ -34,6 +34,7 @@ Rails.application.routes.draw do
       get :edit_suspension
       patch :update_suspension
       patch :unlock
+      patch :reset_2fa
     end
   end
 

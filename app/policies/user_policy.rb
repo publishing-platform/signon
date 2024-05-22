@@ -13,6 +13,7 @@ class UserPolicy < BasePolicy
   alias_method :update_suspension?, :index?
   alias_method :unlock?, :index?
   alias_method :resend?, :index?
+  alias_method :reset_2fa?, :index?
 
   def edit_email_or_password?
     allow_self_only

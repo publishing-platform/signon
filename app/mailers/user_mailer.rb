@@ -5,6 +5,11 @@ class UserMailer < Devise::Mailer
 
   helper_method :account_name, :app_name, :instance_name, :locked_time, :unlock_time
 
+  def two_factor_reset(user)
+    @user = user
+    mail(to: @user.email, subject: "2-Factor Authentication (2FA) has been reset")
+  end  
+
   def confirmation_instructions(user, token, _opts = {})
     @user = user
     @token = token
