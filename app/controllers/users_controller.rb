@@ -180,6 +180,14 @@ private
     ).sanitise
   end
 
+  def password_params
+    params.require(:user).permit(
+      :current_password,
+      :password,
+      :password_confirmation,
+    )
+  end  
+
   def current_user_role
     current_user.role.to_sym
   end
