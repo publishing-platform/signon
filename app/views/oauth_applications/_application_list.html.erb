@@ -6,7 +6,7 @@
     </tr>
   </thead>  
   <tbody>
-    <% @applications.each do |application| %>
+    <% applications.each do |application| %>
       <tr>
         <td>
           <%= link_to(application.name, edit_oauth_application_path(application)) %>     

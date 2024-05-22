@@ -1,9 +1,12 @@
 <% content_for :title, "Edit '#{@application.name}'" %>
 
-<p class="devgovuk-body">
+<p>
   <%= link_to "Edit application permissions", 
-      oauth_application_permissions_path(@application),
-      class: "devgovuk-link" %>
+      oauth_application_permissions_path(@application) %>
 </p>
 
-<%= render 'form' %>
+<div class="row">
+  <div class="col-xs-12">
+    <%= render 'form' %>
+  </div>
+</div>

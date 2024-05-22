@@ -36,58 +36,42 @@
       attribute: :redirect_uri,
       resource: f.object
     } %>
-  </div>       
-
-  <%= f.submit "Save application", class: "btn btn-primary" %>  
-
+  </div>     
   
-<% if false %>
-
   <% if f.object.persisted? %>
-    <%= render "devgovuk_publishing_components/components/input", {
-      id: "application_uid",
-      label: {
-        text: "UID"
-      },
-      hint: "The app has a copy of this. Used in the signin redirect dance.",  
-      name: "application[uid]",
-      value: f.object.uid      
-    } %>   
+    <div class="mb-3">
+      <%= f.label :uid, "UID", class: "form-label" %>
+      <p id="uid-hint" class="fw-light">The app has a copy of this. Used in the signin redirect dance.</p>    
+      <%= f.text_field :uid, class: "form-control", aria: { describedby: (f.object.errors.has_key?(:uid) ? "uid-errors uid-hint" : "uid-hint") } %>    
+      <%= render "components/errors", {
+        attribute: :uid,
+        resource: f.object
+      } %>
+    </div>
 
-    <%= render "devgovuk_publishing_components/components/input", {
-      id: "application_secret",
-      label: {
-        text: "Secret"
-      },
-      hint: "The app has a copy of this. Used in the signin redirect dance.",  
-      name: "application[secret]",
-      value: f.object.secret      
-    } %>    
+    <div class="mb-3">
+      <%= f.label :secret, "Secret", class: "form-label" %>
+      <p id="secret-hint" class="fw-light">The app has a copy of this. Used in the signin redirect dance.</p>    
+      <%= f.text_field :secret, class: "form-control", aria: { describedby: (f.object.errors.has_key?(:secret) ? "secret-errors secret-hint" : "secret-hint") } %>    
+      <%= render "components/errors", {
+        attribute: :secret,
+        resource: f.object
+      } %>
+    </div>       
     
-    <input name="application[retired]" type="hidden" value="0" autocomplete="off">
+    <div class="form-check mb-3">
+      <%= f.check_box :retired?, class: "form-check-input" %>
+      <%= f.label :retired?, "This application is retired", class: "form-label" %>
+    </div>  
 
-    <%= render "devgovuk_publishing_components/components/checkboxes", {
-      id: "application_retired",
-      name: "application[retired]",
-      items: [
-        {
-          label: "This application is retired",
-          value: 1,
-          checked: f.object.retired?
-        }
-      ]
-    } %> 
-    
-    <p class="devgovuk-body">
+    <p>
       Retiring an application will hide the application from the dashboard. It will
       not delete data.
-    </p>
-  <% end %> 
+    </p>    
+      
+  <% end %>
 
-  <%= render "devgovuk_publishing_components/components/button", {
-    text: "Save application",
-    margin_bottom: true
-  } %>
-<% end %>
+
+  <%= f.submit "Save application", class: "btn btn-primary" %>  
 
 <% end %>
