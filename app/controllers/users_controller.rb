@@ -30,6 +30,40 @@ class UsersController < ApplicationController
     end
   end
 
+  def edit_email_or_password
+    @user = User.find(params[:id])
+    authorize @user
+  end  
+
+  def update_email
+    @user = User.find(params[:id])
+    authorize @user
+    new_email = params[:user][:email]
+
+    if @user.email == new_email.strip
+      flash[:alert] = "Nothing to update."
+      render :edit_email_or_password
+    elsif @user.update(email: new_email)
+      UserMailer.email_changed_notification(@user).deliver_later
+      redirect_to root_path, notice: "An email has been sent to #{new_email}. Follow the link in the email to update your address."
+    else
+      render :edit_email_or_password
+    end
+  end
+
+  def update_password
+    @user = User.find(params[:id])
+    authorize @user
+
+    if @user.update_with_password(password_params)
+      flash[:notice] = t(:updated, scope: "devise.passwords")
+      bypass_sign_in(@user)
+      redirect_to root_path
+    else
+      render :edit_email_or_password
+    end
+  end  
+
   def resend_email_change
     @user = User.find(params[:id])
     authorize @user

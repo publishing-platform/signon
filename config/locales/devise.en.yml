@@ -16,6 +16,7 @@ en:
       timeout: "Your session expired. Please sign in again to continue."
       unauthenticated: ""
       unconfirmed: "You have to confirm your email address before continuing."
+      suspended: "Your account has been suspended."
     links:
       forgot_password: "Forgot your password?"      
     mailer:
