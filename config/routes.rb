@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  use_doorkeeper
   devise_for :users, controllers: {
     invitations: "users/invitations",
     sessions: "users/sessions",

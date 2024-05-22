@@ -8,6 +8,7 @@ gem "rails", "~> 7.1.3", ">= 7.1.3.2"
 gem "bootsnap", require: false
 gem "devise", "~> 4.9"
 gem "devise_invitable", "~> 2.0.0"
+gem "doorkeeper"
 gem "jbuilder"
 gem "jsbundling-rails"
 gem "kaminari", "~>1.2"
