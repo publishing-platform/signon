@@ -31,7 +31,8 @@
 
         <div class="mb-3">
           <%= label_tag :code, "Code from app", class: "form-label" %>
-          <%= text_field_tag :code, nil, placeholder: "Enter 6-digit 2FA code", class: "form-control" %>
+          <p id="code-hint" class="fw-light">Enter 6-digit 2FA code</p>
+          <%= text_field_tag :code, nil, aria: { describedby: "code-hint" }, class: "form-control" %>
         </div> 
 
         <%= submit_tag current_user.has_2fa? ? "Finish replacing your phone" : "Finish set up", class: "btn btn-primary" %>        
