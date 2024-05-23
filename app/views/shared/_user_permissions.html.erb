@@ -1,0 +1,50 @@
+<table class="table mb-3">
+  <thead>
+    <tr>
+      <th scope="col">Application</th>
+      <% unless user_object.api_user? %>
+      <th scope="col">Has access?</th>
+      <% end %>      
+      <th scope="col"><%= "Other" unless user_object.api_user? %> Permissions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% applications_and_permissions(user_object).each do |application|
+      attribute_name = user_object.api_user? ? "api_user" : "user"
+      permission_field_name = "#{attribute_name}[permission_ids][]"
+      permission_field_id_prefix = "#{attribute_name}_application_#{application.id}_permission"
+    %>
+      <tr>
+        <td>
+          <% if application.retired? %>
+              <del><%= application.name %></del>
+          <% else %>
+              <%= application.name %>
+          <% end %>        
+        </td>
+        <% if user_object.api_user? %>
+          <%= hidden_field_tag permission_field_name, application.signin_permission.id, id: "#{permission_field_id_prefix}_#{Permission::SIGNIN_NAME}"%>
+        <% else %>          
+          <td>
+            <%= label_tag "#{permission_field_id_prefix}_#{Permission::SIGNIN_NAME}", "Has access to #{application.name}?", class: "visually-hidden" %>
+            <%= check_box_tag permission_field_name, application.signin_permission.id, user_object.has_access_to?(application),
+              id: "#{permission_field_id_prefix}_#{Permission::SIGNIN_NAME}" %>
+          </td>
+        <% end %> 
+        <td>   
+          <%= label_tag "#{permission_field_id_prefix}_ids", "Permissions for #{application.name}", class: "visually-hidden" %>
+          <% permission_options = application.permissions.inject({}) {|h, p| h.merge(p.name => p.id)}
+            permission_options.delete(Permission::SIGNIN_NAME)
+          %>  
+          <%= select_tag permission_field_name,
+            options_for_select(permission_options, user_object.permission_ids_for(application)),
+            multiple: true,
+            id: "#{permission_field_id_prefix}_ids",
+            class: "tom-select-multiple"
+          %>
+        </td>            
+      </tr>
+    <% end %>
+  </tbody>
+</table>

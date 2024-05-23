@@ -47,12 +47,5 @@
   </div>
 <% end %>
 
-<% if false %>
-<!-- 
-<h2 class="devgovuk-heading-m">Permissions</h2>
-<% if policy(User).grant_permissions? %>  
-  <%= render partial: "shared/user_permissions", locals: { user_object: f.object }%>
-<% else %>
-  <%= render partial: "application_permissions", locals: { user_object: f.object }%>
-<% end %> -->
-<% end %>
+<h2 class="mb-3 mt-4">Permissions</h2>
+<%= render partial: "shared/user_permissions", locals: { user_object: f.object }%>
