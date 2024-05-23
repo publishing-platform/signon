@@ -15,8 +15,6 @@ class UsersController < ApplicationController
   def edit
     @user = User.find(params[:id])
     authorize @user
-
-    # @application_permissions = assigned_applications_and_permissions_for(@user)
   end
 
   def update
