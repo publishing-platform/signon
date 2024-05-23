@@ -107,7 +107,7 @@ class User < ApplicationRecord
 
   def has_access_to?(application)
     users_permissions.exists?(permission_id: application.signin_permission.id)
-  end  
+  end
 
   def status
     if suspended?

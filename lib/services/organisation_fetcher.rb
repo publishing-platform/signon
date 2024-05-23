@@ -19,7 +19,7 @@ module Services
             abbreviation: nil,
             status: "live",
             content_id: "96ae61d6-c2a1-48cb-8e67-da9d105ae381",
-          }
+          },
         },
         {
           title: "Digital Services",
@@ -29,7 +29,7 @@ module Services
             abbreviation: "DS",
             status: "live",
             content_id: "af07d5a5-df63-4ddc-9383-6a666845ebe9",
-          }
+          },
         },
         {
           title: "Financial Services",
@@ -39,8 +39,8 @@ module Services
             abbreviation: "FS",
             status: "live",
             content_id: "06056197-bc69-4147-aa28-070bca132178",
-          }
-        }
+          },
+        },
       ]
     end
 

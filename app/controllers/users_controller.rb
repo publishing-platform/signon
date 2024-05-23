@@ -33,7 +33,7 @@ class UsersController < ApplicationController
   def edit_email_or_password
     @user = User.find(params[:id])
     authorize @user
-  end  
+  end
 
   def update_email
     @user = User.find(params[:id])
@@ -62,7 +62,7 @@ class UsersController < ApplicationController
     else
       render :edit_email_or_password
     end
-  end  
+  end
 
   def resend_email_change
     @user = User.find(params[:id])
@@ -186,7 +186,7 @@ private
       :password,
       :password_confirmation,
     )
-  end  
+  end
 
   def current_user_role
     current_user.role.to_sym
