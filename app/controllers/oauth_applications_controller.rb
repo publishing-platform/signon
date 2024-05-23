@@ -51,6 +51,7 @@ private
       :uid,
       :secret,
       :retired,
+      :api_only,
     )
   end
 end

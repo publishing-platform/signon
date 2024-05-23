@@ -16,17 +16,8 @@ module ApplicationHelper
       items << { text: "Apps", href: oauth_applications_path, active: is_current?(oauth_applications_path) }
     end
 
-    items << { text: current_user.name, href: user_link_target }
+    items << { text: current_user.name, href: edit_email_or_password_user_path(current_user) }
     items << { text: "Sign out", href: destroy_user_session_path }
-  end
-
-  def user_link_target
-    # The page the current user's name in the header should link them to
-    if policy(current_user).edit?
-      edit_user_path(current_user)
-    else
-      edit_email_or_password_user_path(current_user)
-    end
   end
 
   def is_current?(link)

@@ -7,14 +7,14 @@
 
 <% if @user.suspended? and @user.reason_for_suspension.present? %>
   <div class="alert alert-warning" role="alert">
-    <h2 class="alert-heading h4">User suspended</h4>
+    <h2 class="alert-heading h4">User suspended</h2>
     <em><%= @user.reason_for_suspension %></em>
   </div>
 <% end %>
 
 <% if @user.invited_but_not_yet_accepted? %>
   <div class="alert alert-warning" role="alert">
-    <h2 class="alert-heading h4">Invitation not accepted yet</h4>
+    <h2 class="alert-heading h4">Invitation not accepted yet</h2>
     <p>This user hasn't clicked on the link in their signup mail yet.</p>
     <%= form_tag resend_user_invitation_path(@user), method: :put do %>
       <%= submit_tag "Resend signup email", class: "btn btn-primary" %>     
@@ -24,7 +24,7 @@
 
 <% if @user.access_locked? %>
   <div class="alert alert-warning" role="alert">
-    <h2 class="alert-heading h4">Account locked</h4>
+    <h2 class="alert-heading h4">Account locked</h2>
     <p>Account has been locked after too many unsuccessful login attempts.</p>
     <p>Locked accounts are automatically unlocked after 1 hour.</p>
     <%= form_tag unlock_user_path(@user), method: :patch do %>
@@ -36,7 +36,7 @@
 
 <% if @user.unconfirmed_email.present? %>
   <div class="alert alert-warning" role="alert">
-    <h2 class="alert-heading h4">Pending email change</h4>
+    <h2 class="alert-heading h4">Pending email change</h2>
     <p>An email has been sent to <strong><%= @user.unconfirmed_email %></strong> with a link to confirm the change.</p>
 
     <%= form_tag resend_email_change_user_path(@user), method: :put, class: "d-md-inline-block" do %>
@@ -51,7 +51,7 @@
 
 <% if @user.has_2fa? %>
   <div class="alert alert-warning" role="alert">
-    <h2 class="alert-heading h4">Reset 2-Factor Authentication (2FA)</h4>
+    <h2 class="alert-heading h4">Reset 2-Factor Authentication (2FA)</h2>
     <p>Allow user to sign in without a verification code. User will be prompted to set up 2-Factor Authentication again the next time they sign in.</p>
 
     <%= form_tag reset_2fa_user_path(@user), method: :patch do %>

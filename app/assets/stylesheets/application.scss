@@ -16,4 +16,18 @@
   }  
 }
 
+.application-list__item {
+  border-top: 1px solid #cccccc;
+  padding-top: 20px;
+}
+
+.dashboard-side {
+  border-top: 2px solid $primary;
+  padding-top: 20px;
+
+  .list-group-item {
+    padding-left: 0;
+  }  
+}
+
 @import "tom-select/dist/css/tom-select.bootstrap5.css";

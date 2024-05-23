@@ -58,16 +58,26 @@
         resource: f.object
       } %>
     </div>       
+
+    <div class="form-check mb-3">
+      <%= f.check_box :api_only?, class: "form-check-input" %>
+      <%= f.label :api_only?, "Is API-only", class: "form-label" %>
+    </div>  
+    
+    <p class="fw-light">
+      An API-only application is one that doesn't have a user interface and is only used by API users.
+      API-only applications will not appear on most pages including the dashboard.
+    </p>    
     
     <div class="form-check mb-3">
       <%= f.check_box :retired?, class: "form-check-input" %>
       <%= f.label :retired?, "This application is retired", class: "form-label" %>
     </div>  
 
-    <p>
+    <p class="fw-light">
       Retiring an application will hide the application from the dashboard. It will
       not delete data.
-    </p>    
+    </p> 
       
   <% end %>
 
