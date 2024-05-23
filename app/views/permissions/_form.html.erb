@@ -1,0 +1,15 @@
+<%= form_for [@application, @permission] do |f| %>
+
+  <div class="mb-3">
+    <%= f.label :name, "Permission name", class: "form-label" %>  
+    <p id="name-hint" class="fw-light"><%= t('permissions.form.placeholder.name') + (f.object.signin? ? " (cannot be changed)" : "") %></p>  
+    <%= f.text_field :name, class: "form-control", aria: { describedby: (f.object.errors.has_key?(:name) ? "name-errors name-hint" : "name-hint") } %>    
+    <%= render "components/errors", {
+      attribute: :name,
+      resource: f.object
+    } %>
+  </div>    
+
+  <%= f.submit "Save permission", class: "btn btn-primary" %> 
+
+<% end %>

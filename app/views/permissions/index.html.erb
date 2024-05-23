@@ -1,0 +1,32 @@
+<% content_for :title, "Permissions for #{@application.name}" %>
+<% content_for :breadcrumbs do %>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<%= root_path %>">Home</a></li>
+      <li class="breadcrumb-item"><a href="<%= oauth_applications_path %>">Applications</a></li>
+      <li class="breadcrumb-item"><a href="<%= edit_oauth_application_path(@application) %>"><%= @application.name %></a></li>
+      <li class="breadcrumb-item active" aria-current="page">Permissions</li>
+    </ol>
+  </nav>
+<% end %>
+
+<%= link_to "Add permission", new_oauth_application_permission_path, class: "btn btn-primary mb-3" %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Permission name</th>
+      <th scope="col">Created</th>
+    </tr>
+  </thead>  
+  <tbody>
+    <% @application.permissions.map do |permission| %>
+      <tr>
+        <td>
+          <%= link_to(permission.name, edit_oauth_application_permission_path(@application, permission)) %>     
+        </td>
+        <td><%= permission.created_at.to_date.to_fs(:publishing_platform_date) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

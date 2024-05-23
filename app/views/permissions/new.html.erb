@@ -1,0 +1,14 @@
+<% content_for :title, "Add permission for #{@application.name}" %>
+<% content_for :breadcrumbs do %>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<%= root_path %>">Home</a></li>
+      <li class="breadcrumb-item"><a href="<%= oauth_applications_path %>">Applications</a></li>
+      <li class="breadcrumb-item"><a href="<%= edit_oauth_application_path(@application) %>"><%= @application.name %></a></li>
+      <li class="breadcrumb-item"><a href="<%= oauth_application_permissions_path(@application) %>">Permissions</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Add permission</li>
+    </ol>
+  </nav>
+<% end %>
+
+<%= render 'form' %>
