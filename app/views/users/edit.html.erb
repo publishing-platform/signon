@@ -2,7 +2,7 @@
 
 <p>
   User <strong><%= @user.status %></strong> &bull;
-  <%= link_to "#{@user.suspended? ? "Uns" : "S"}uspend user", edit_suspension_user_path(@user) %>
+  <%= link_to "#{@user.suspended? ? "Uns" : "S"}uspend user", edit_user_suspensions_path(@user) %>
 </p>
 
 <% if @user.suspended? and @user.reason_for_suspension.present? %>

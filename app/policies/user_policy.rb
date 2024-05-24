@@ -9,8 +9,7 @@ class UserPolicy < BasePolicy
   alias_method :update?, :index?
   alias_method :assign_organisations?, :index?
   alias_method :grant_permissions?, :index?
-  alias_method :edit_suspension?, :index?
-  alias_method :update_suspension?, :index?
+  alias_method :suspension?, :index?
   alias_method :unlock?, :index?
   alias_method :resend?, :index?
   alias_method :reset_2fa?, :index?

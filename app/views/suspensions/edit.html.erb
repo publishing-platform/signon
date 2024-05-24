@@ -1,7 +1,15 @@
-<% content_for :title, "Suspend #{@user.name}" %>
-<% content_for :back_link, edit_user_path(@user) %>
+<% content_for :title, "Suspend or unsuspend #{@user.name}" %>
+<% content_for :breadcrumbs do %>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<%= root_path %>">Home</a></li>
+      <li class="breadcrumb-item"><a href="<%= @user.api_user? ? api_users_path : users_path %>"><%= @user.api_user? ? "API users" : "Users" %></a></li>
+      <li class="breadcrumb-item"><a href="<%= @user.api_user? ? edit_api_user_path(@user) : edit_user_path(@user) %>"><%= @user.name %></a></li>
+    </ol>
+  </nav>
+<% end %>
 
-<%= form_tag update_suspension_user_path(@user), method: "patch" do %>
+<%= form_tag user_suspensions_path(@user), method: "put" do %>
   <p>
     After the user has been unsuspended, they will need to reset their password.
   </p>

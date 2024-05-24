@@ -31,11 +31,11 @@ Rails.application.routes.draw do
       patch :update_password
       put :resend_email_change
       delete :cancel_email_change
-      get :edit_suspension
-      patch :update_suspension
       patch :unlock
       patch :reset_2fa
     end
+
+    resource :suspensions, only: %i[edit update]      
   end
 
   resources :oauth_applications, except: %i[show destroy] do
