@@ -1,0 +1,118 @@
+<% content_for :title, "Manage tokens for #{@api_user.name}" %>
+
+<% content_for :breadcrumbs do %>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<%= root_path %>">Home</a></li>
+      <li class="breadcrumb-item"><a href="<%= api_users_path %>">API users</a></li>
+      <li class="breadcrumb-item"><a href="<%= edit_api_user_path(@api_user) %>"><%= @api_user.name %></a></li>
+      <li class="breadcrumb-item active" aria-current="page">Manage tokens</li>
+    </ol>
+  </nav>
+<% end %>
+
+<% if authorisation = flash[:authorisation] %>
+  <div class="alert alert-success" role="alert">
+    <h2 class="alert-heading h4">Token created</h2>
+    <p>Make sure to copy the access token for <%= authorisation["application_name"] %> now. You won't be able to see it again!</p>
+    <hr>
+    <div data-module="copy-to-clipboard">
+      <div class="mb-3">
+        <%= label_tag :token, "Access token for #{authorisation["application_name"]}", class: "form-label" %> 
+        <%= text_field_tag :token, authorisation["token"], class: "form-control copy-to-clipboard-target", readonly: true %> 
+      </div>
+      <%= button_tag "Copy access token", class: "btn btn-secondary copy-to-clipboard-button" %> 
+    </div> 
+  </div>
+<% end %>
+
+<%= link_to "Add application token", new_api_user_authorisation_path(@api_user), class: "btn btn-primary mb-3" %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Application</th>
+      <th scope="col">Token (hidden)</th>
+      <th scope="col">Generated</th>
+      <th scope="col">Expires</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>  
+  <tbody>
+    <% @api_user.authorisations.includes(:application).where(revoked_at: nil).merge(OauthApplication.ordered_by_name).each do |authorisation| %>
+      <tr>
+        <td>
+          <%= authorisation.application.name %>     
+        </td>
+        <td><code><%= truncate_access_token(authorisation.token) %></code></td>
+        <td><%= authorisation.created_at.to_date.to_fs(:publishing_platform_date) %></td>
+        <td><%= authorisation.expires_at.to_date.to_fs(:publishing_platform_date) %></td>
+        <td>
+          <a href="<%= edit_api_user_authorisation_path(@api_user, authorisation) %>">
+            Revoke<span class="visually-hidden"> token giving <%= @api_user.name %> access to <%= authorisation.application.name %></span>
+          </a>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if false %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-form-group">
+      <%= render "govuk_publishing_components/components/button", {
+        text: "Add application token",
+        href: new_api_user_authorisation_path(@api_user),
+      } %>
+    </div>
+
+    <% @api_user.authorisations.not_revoked.ordered_by_application_name.ordered_by_expires_at.each do |authorisation| %>
+      <div class="govuk-summary-card">
+        <div class="govuk-summary-card__title-wrapper">
+          <h2 class="govuk-summary-card__title"><%= authorisation.application.name %></h2>
+          <ul class="govuk-summary-card__actions">
+            <li class="govuk-summary-card__action">
+              <a class="govuk-link" href="<%= edit_api_user_authorisation_path(@api_user, authorisation) %>">
+                Revoke<span class="govuk-visually-hidden"> token giving <%= @api_user.name %> access to <%= authorisation.application.name %></span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="govuk-summary-card__content">
+          <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Token (hidden)
+              </dt>
+              <dd class="govuk-summary-list__value">
+                <code>
+                  <%= truncate_access_token(authorisation.token) %>
+                </code>
+              </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Generated
+              </dt>
+              <dd class="govuk-summary-list__value">
+                <%= authorisation.created_at.to_date.to_fs(:govuk_date) %>
+              </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Expires
+              </dt>
+              <dd class="govuk-summary-list__value">
+                <%= authorisation.expires_at.to_date.to_fs(:govuk_date) %>
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<% end %>

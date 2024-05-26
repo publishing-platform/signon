@@ -1,0 +1,24 @@
+<table class="table">
+  <caption class="visually-hidden">API users</caption>
+  <thead>
+    <tr>
+      <th scope="col">Name and email</th>
+      <th scope="col">Apps</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>  
+  <tbody>
+    <% @api_users.each do |user| %>
+      <tr>
+        <td>
+          <%= user.unusable_account? ? "<del>".html_safe : "" %>
+          <%= link_to "#{user.name}", edit_api_user_path(user) %>
+          <%= user.unusable_account? ? "</del>".html_safe : "" %>
+          <br><small><%= user.email %></small>        
+        </td>
+        <td><%= application_list(user) %></td>
+        <td><%= user.status.humanize %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

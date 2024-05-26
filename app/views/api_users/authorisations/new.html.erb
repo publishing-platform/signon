@@ -1,0 +1,26 @@
+<% content_for :title, "Create new access token for #{@api_user.name}" %>
+
+<% content_for :breadcrumbs do %>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<%= root_path %>">Home</a></li>
+      <li class="breadcrumb-item"><a href="<%= api_users_path %>">API users</a></li>
+      <li class="breadcrumb-item"><a href="<%= edit_api_user_path(@api_user) %>"><%= @api_user.name %></a></li>
+      <li class="breadcrumb-item"><a href="<%= manage_tokens_api_user_path(@api_user) %>">Manage tokens</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Create token</li>
+    </ol>
+  </nav>
+<% end %>
+
+<div class="row">
+  <div class="col-xs-12 col-md-6">
+    <%= form_tag api_user_authorisations_path(@api_user), method: :post do %>
+      <div class="mb-3">
+        <%= label :authorisation, :application_id, "Application", class: "form-label" %> 
+        <%= select :authorisation, :application_id, options_from_collection_for_select(OauthApplication.all, "id", "name"), { include_blank: "" } , class: "form-control" %>
+      </div>
+
+      <%= submit_tag "Create access token", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

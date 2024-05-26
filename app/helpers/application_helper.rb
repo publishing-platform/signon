@@ -12,6 +12,10 @@ module ApplicationHelper
       items << { text: "Users", href: users_path, active: is_current?(users_path) }
     end
 
+    if policy(ApiUser).index?
+      items << { text: "APIs", href: api_users_path, active: is_current?(api_users_path) }
+    end    
+
     if policy(OauthApplication).index?
       items << { text: "Apps", href: oauth_applications_path, active: is_current?(oauth_applications_path) }
     end

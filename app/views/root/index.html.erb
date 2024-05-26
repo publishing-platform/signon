@@ -9,6 +9,12 @@
       </div>    
     <% end %>
 
+    <% if @applications.empty? %>
+      <p>
+        You haven't been assigned to any applications yet
+      </p>
+    <% end %>    
+
     <% @applications.each do |application| %>
       <div class="application-list__item">
         <h2 class="h4">

@@ -1,0 +1,17 @@
+<div class="mb-3">
+  <%= f.label :name, "Name", class: "form-label" %>
+  <%= f.text_field :name, class: "form-control", aria: { describedby: (f.object.errors.has_key?(:name) ? "name-errors" : nil) } %>    
+  <%= render "components/errors", {
+    attribute: :name,
+    resource: f.object
+  } %>
+</div>  
+
+<div class="mb-3">
+  <%= f.label :email, "Email", class: "form-label" %>
+  <%= f.text_field :email, class: "form-control", aria: { describedby: (f.object.errors.has_key?(:email) ? "email-errors" : nil) } %>    
+  <%= render "components/errors", {
+    attribute: :email,
+    resource: f.object
+  } %>
+</div>

@@ -35,6 +35,7 @@ class User < ApplicationRecord
   belongs_to :organisation, optional: true
   has_many :users_permissions
   has_many :permissions, through: :users_permissions
+  has_many :authorisations, class_name: "Doorkeeper::AccessToken", foreign_key: :resource_owner_id
 
   # hooks
   after_initialize :generate_uid
@@ -97,6 +98,23 @@ class User < ApplicationRecord
     invited_but_not_yet_accepted? || suspended? || access_locked?
   end
 
+  def grant_application_signin_permission(application)
+    grant_application_permission(application, Permission::SIGNIN_NAME)
+  end  
+
+  def grant_application_permission(application, permission_name)
+    grant_application_permissions(application, [permission_name]).first
+  end
+
+  def grant_application_permissions(application, permission_names)
+    return [] if application.retired?
+
+    permission_names.map do |permission_name|
+      permission = Permission.find_by(oauth_application_id: application.id, name: permission_name)
+      grant_permission(permission)
+    end
+  end  
+
   def grant_permission(permission)
     users_permissions.where(permission_id: permission.id).first_or_create!.permission
   end
@@ -120,4 +138,8 @@ class User < ApplicationRecord
       USER_STATUS_ACTIVE
     end
   end
+
+  def web_user?
+    !api_user?
+  end  
 end

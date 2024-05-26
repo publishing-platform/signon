@@ -8,10 +8,13 @@ module Services
     end
 
     def call
-      @user.skip_reconfirmation! if @user.invited_but_not_yet_accepted?
+      @user.skip_reconfirmation!
       return unless update_user
 
-      @user.invite! if @user.invited_but_not_yet_accepted?
+      if @user.previous_changes[:email]
+        @user.invite! if @user.web_user? && @user.invited_but_not_yet_accepted?
+      end
+
       true
     end
 

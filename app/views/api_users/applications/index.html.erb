@@ -1,0 +1,33 @@
+<% content_for :title, "#{@api_user.name}'s applications" %>
+
+<% content_for :breadcrumbs do %>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<%= root_path %>">Home</a></li>
+      <li class="breadcrumb-item"><a href="<%= api_users_path %>">API users</a></li>
+      <li class="breadcrumb-item"><a href="<%= edit_api_user_path(@api_user) %>"><%= @api_user.name %></a></li>
+      <li class="breadcrumb-item active" aria-current="page">Applications</li>
+    </ol>
+  </nav>
+<% end %>
+
+
+<table class="table caption-top">
+  <caption>Apps <%= @api_user.name %> has access to</caption>
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>  
+  <tbody>
+    <% @applications.each do |application| %>
+      <tr>
+        <td><%= application.name %></td>
+        <td><%= application.description %></td>
+        <td>...</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
