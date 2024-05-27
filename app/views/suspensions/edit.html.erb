@@ -5,6 +5,7 @@
       <li class="breadcrumb-item"><a href="<%= root_path %>">Home</a></li>
       <li class="breadcrumb-item"><a href="<%= @user.api_user? ? api_users_path : users_path %>"><%= @user.api_user? ? "API users" : "Users" %></a></li>
       <li class="breadcrumb-item"><a href="<%= @user.api_user? ? edit_api_user_path(@user) : edit_user_path(@user) %>"><%= @user.name %></a></li>
+      <li class="breadcrumb-item active" aria-current="page">Suspend or unsuspend</li>
     </ol>
   </nav>
 <% end %>

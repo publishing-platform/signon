@@ -127,6 +127,14 @@ class User < ApplicationRecord
     users_permissions.exists?(permission_id: application.signin_permission.id)
   end
 
+  def has_permission?(permission)
+    if persisted?
+      permissions.exists?(permission.id)
+    else
+      permissions.any? { |p| p.id == permission.id }
+    end
+  end  
+
   def status
     if suspended?
       USER_STATUS_SUSPENDED

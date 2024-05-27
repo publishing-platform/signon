@@ -1,0 +1,29 @@
+<%= form_tag action, method: :patch do |f| %>
+
+<h2 class="h4">Permissions</h2>
+  <% @permissions.each do |permission| %>
+    <%= label_tag "sdfsdf", permission.name %>
+    <%= check_box_tag "application[permission_ids]", permission.id, user.has_permission?(permission) %>
+
+    <% if false %>
+      <%= label_tag "#{permission_field_id_prefix}_#{Permission::SIGNIN_NAME}", "Has access to #{application.name}?", class: "visually-hidden" %>
+      <%= check_box_tag permission_field_name, application.signin_permission.id, user_object.has_access_to?(application),
+        id: "#{permission_field_id_prefix}_#{Permission::SIGNIN_NAME}" %>
+    <% end %>
+
+  <% end %>
+
+  <% if false %>
+    <%= render "govuk_publishing_components/components/checkboxes", {
+        name: "application[supported_permission_ids][]",
+        heading: defined?(heading) ? heading : "Permissions",
+        hint_text: defined?(hint_text) ? hint_text : nil,
+        items: permissions.map { |permission| { label: permission.name, value: permission.id, checked: user.has_permission?(permission) } },
+    } %>
+  <% end %>
+
+  <%= hidden_field_tag "application[permission_ids][]", application.signin_permission.id, id: "checkboxes-signin" %>
+
+  <%= submit_tag "Update permissions", class: "btn btn-primary" %>
+  <%= link_to "Cancel", cancel_path %>
+<% end %>

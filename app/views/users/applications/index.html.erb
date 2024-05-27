@@ -1,0 +1,56 @@
+<% content_for :title, "#{@user.name}'s applications" %>
+
+<% content_for :breadcrumbs do %>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<%= root_path %>">Home</a></li>
+      <li class="breadcrumb-item"><a href="<%= users_path %>">Users</a></li>
+      <li class="breadcrumb-item"><a href="<%= edit_user_path(@user) %>"><%= @user.name %></a></li>
+      <li class="breadcrumb-item active" aria-current="page">Applications</li>
+    </ol>
+  </nav>
+<% end %>
+
+<table class="table caption-top mb-4">
+  <caption>Apps <%= @user.name %> has access to</caption>
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col"><%= content_tag(:span, "Actions", class: "visually-hidden") %></th>
+    </tr>
+  </thead>  
+  <tbody>
+    <% @applications_with_signin.each do |application| %>
+      <tr>
+        <td><%= application.name %></td>
+        <td><%= application.description %></td>
+        <td><%= safe_join([update_permissions_link(@user, application), link_to("Remove access", delete_user_application_signin_permission_path(@user, application))]) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<table class="table caption-top">
+  <caption>Apps <%= @user.name %> does not have access to</caption>
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col"><%= content_tag(:span, "Actions", class: "visually-hidden") %></th>
+    </tr>
+  </thead>  
+  <tbody>
+    <% @applications_without_signin.each do |application| %>
+      <tr>
+        <td><%= application.name %></td>
+        <td><%= application.description %></td>
+        <td>
+          <%= button_to user_application_signin_permission_path(@user, application), form_class: "mb-0", class: "btn btn-primary" do %>
+            Grant access
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

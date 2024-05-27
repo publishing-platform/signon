@@ -1,0 +1,23 @@
+<% content_for :title, "Remove #{@user.name}'s access to #{@application.name}" %>
+
+<% content_for :breadcrumbs do %>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<%= root_path %>">Home</a></li>
+      <li class="breadcrumb-item"><a href="<%= users_path %>">Users</a></li>
+      <li class="breadcrumb-item"><a href="<%= edit_user_path(@user) %>"><%= @user.name %></a></li>
+      <li class="breadcrumb-item"><a href="<%= user_applications_path(@user) %>">Applications</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Remove access</li>
+    </ol>
+  </nav>
+<% end %>
+
+
+<p>Are you sure you want to remove <%= @user.name %>'s access to <%= @application.name %>?</p>
+
+<%= form_with url: user_application_signin_permission_path(@user, @application), method: :delete do |form| %>
+
+  <%= submit_tag "Confirm", class: "btn btn-danger me-3" %>
+  <%= link_to "Cancel", user_applications_path(@user) %>
+
+<% end %>
