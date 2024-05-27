@@ -17,30 +17,18 @@ class Users::PermissionsController < ApplicationController
   end
 
   def update
-    # authorize UserApplicationPermission.for(@user, @application)
+    authorize @user, :edit?
 
-    # selected_permission_ids = []
+    permission_ids = UserUpdatePermissionBuilder.new(
+      user: @user,
+      updatable_permission_ids: @permissions.pluck(:id),
+      selected_permission_ids: update_params[:permission_ids].map(&:to_i),
+    ).build
 
-    # if update_params[:supported_permission_ids]
-    #   selected_permission_ids = update_params[:supported_permission_ids]
-    # elsif update_params[:new_permission_id]&.length&.> 0
-    #   selected_permission_ids.concat(update_params[:current_permission_ids] || [], [update_params[:new_permission_id]])
-    # else
-    #   flash[:alert] = "You must select a permission."
-    #   redirect_to edit_user_application_permissions_path(@user, @application)
-    #   return
-    # end
+    Services::UserUpdater.call(@user, { permission_ids: }, current_user)
 
-    # supported_permission_ids = UserUpdatePermissionBuilder.new(
-    #   user: @user,
-    #   updatable_permission_ids: @permissions.pluck(:id),
-    #   selected_permission_ids: selected_permission_ids.map(&:to_i),
-    # ).build
-
-    # UserUpdate.new(@user, { supported_permission_ids: }, current_user, user_ip_address).call
-
-    # flash[:application_id] = @application.id
-    # redirect_to user_applications_path(@user)
+    flash[:notice] = "Permissions successfully updated"
+    redirect_to user_applications_path(@user)
   end
 
 private

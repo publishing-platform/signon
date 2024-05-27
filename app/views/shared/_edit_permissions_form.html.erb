@@ -1,9 +1,10 @@
 <%= form_tag action, method: :patch do |f| %>
 
 <h2 class="h4">Permissions</h2>
-  <% @permissions.each do |permission| %>
-    <%= label_tag "sdfsdf", permission.name %>
-    <%= check_box_tag "application[permission_ids]", permission.id, user.has_permission?(permission) %>
+  <% @permissions.each_with_index do |permission, index| %>
+    <% id = "checkboxes-#{index}" %>
+    <%= label_tag id, permission.name %>
+    <%= check_box_tag "application[permission_ids][]", permission.id, user.has_permission?(permission), id: %>
 
     <% if false %>
       <%= label_tag "#{permission_field_id_prefix}_#{Permission::SIGNIN_NAME}", "Has access to #{application.name}?", class: "visually-hidden" %>
@@ -24,6 +25,6 @@
 
   <%= hidden_field_tag "application[permission_ids][]", application.signin_permission.id, id: "checkboxes-signin" %>
 
-  <%= submit_tag "Update permissions", class: "btn btn-primary" %>
+  <%= submit_tag "Update permissions", class: "btn btn-primary me-3" %>
   <%= link_to "Cancel", cancel_path %>
 <% end %>
