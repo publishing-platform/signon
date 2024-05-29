@@ -45,6 +45,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get "user", to: "oauth_users#show"
+
   resources :oauth_applications, except: %i[show destroy] do
     resources :permissions, except: %i[show destroy]
   end
