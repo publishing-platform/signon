@@ -120,6 +120,10 @@ class User < ApplicationRecord
     users_permissions.where(permission_id: permission.id).first_or_create!.permission
   end
 
+  def permissions_for(application)
+    permissions.where(oauth_application_id: application.id).order(:name).pluck(:name)
+  end
+
   def permission_ids_for(application)
     permissions.where(oauth_application_id: application.id).pluck(:id)
   end

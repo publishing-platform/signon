@@ -38,6 +38,8 @@ module Signon
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+    
+    config.eager_load_paths << Rails.root.join("lib")
 
     # Using a sass css compressor causes a scss file to be processed twice
     # (once to build, once to compress) which breaks the usage of "unquote"
