@@ -1,4 +1,13 @@
 <% content_for :title, "Create new application" %>
+<% content_for :breadcrumbs do %>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<%= root_path %>">Home</a></li>
+      <li class="breadcrumb-item"><a href="<%= oauth_applications_path %>">Applications</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Create application</li>
+    </ol>
+  </nav>
+<% end %>
 
 <div class="row">
   <div class="col-xs-12">

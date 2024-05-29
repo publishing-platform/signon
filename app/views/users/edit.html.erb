@@ -1,4 +1,13 @@
 <% content_for :title, "Edit #{@user.name}" %>
+<% content_for :breadcrumbs do %>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<%= root_path %>">Home</a></li>
+      <li class="breadcrumb-item"><a href="<%= users_path %>">Users</a></li>
+      <li class="breadcrumb-item active" aria-current="page"><%= @user.name %></li>
+    </ol>
+  </nav>
+<% end %>
 
 <p>
   User <strong><%= @user.status %></strong> &bull;

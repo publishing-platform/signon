@@ -1,6 +1,15 @@
 <%
   content_for :title, t("devise.invitations.new.header")
 %>
+<% content_for :breadcrumbs do %>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<%= root_path %>">Home</a></li>
+      <li class="breadcrumb-item"><a href="<%= users_path %>">Users</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Create user</li>
+    </ol>
+  </nav>
+<% end %>
 
 <div class="row">
   <div class="col-xs-12 col-md-8">

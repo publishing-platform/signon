@@ -1,4 +1,13 @@
 <% content_for :title, "Edit '#{@application.name}'" %>
+<% content_for :breadcrumbs do %>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<%= root_path %>">Home</a></li>
+      <li class="breadcrumb-item"><a href="<%= oauth_applications_path %>">Applications</a></li>
+      <li class="breadcrumb-item active" aria-current="page"><%= @application.name %></li>
+    </ol>
+  </nav>
+<% end %>
 
 <p>
   <%= link_to "Edit application permissions", 
