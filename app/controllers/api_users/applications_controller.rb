@@ -7,6 +7,6 @@ class ApiUsers::ApplicationsController < ApplicationController
 
     authorize @api_user
 
-    @applications = authorised_applications(@api_user)
+    @applications = @api_user.authorised_applications.merge(OauthAccessToken.not_revoked)
   end
 end

@@ -1,0 +1,17 @@
+<% content_for :title, "Update #{@api_user.name}'s permissions for #{@application.name}" %>
+
+<% content_for :breadcrumbs do %>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<%= root_path %>">Home</a></li>
+      <li class="breadcrumb-item"><a href="<%= api_users_path %>">API users</a></li>
+      <li class="breadcrumb-item"><a href="<%= edit_api_user_path(@api_user) %>"><%= @api_user.name %></a></li>
+      <li class="breadcrumb-item"><a href="<%= api_user_applications_path(@api_user) %>">Applications</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Update permissions</li>
+    </ol>
+  </nav>
+<% end %>
+
+<%= render "shared/edit_permissions_form", {
+  **@shared_permissions_form_locals
+} %>

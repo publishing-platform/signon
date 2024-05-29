@@ -26,7 +26,7 @@
       <tr>
         <td><%= application.name %></td>
         <td><%= application.description %></td>
-        <td>...</td>
+        <td><%= update_permissions_link(@api_user, application) %></td>
       </tr>
     <% end %>
   </tbody>

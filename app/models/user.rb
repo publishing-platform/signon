@@ -36,6 +36,7 @@ class User < ApplicationRecord
   has_many :users_permissions
   has_many :permissions, through: :users_permissions
   has_many :authorisations, class_name: "Doorkeeper::AccessToken", foreign_key: :resource_owner_id
+  has_many :authorised_applications, -> { distinct(:application) }, through: :authorisations, source: :application
 
   # hooks
   after_initialize :generate_uid
