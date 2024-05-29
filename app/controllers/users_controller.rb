@@ -143,7 +143,6 @@ private
       :email,
       :organisation_id,
       :role,
-      permission_ids: [],
     ).to_h
   end
 
