@@ -35,14 +35,14 @@ Rails.application.routes.draw do
       patch :reset_2fa
     end
 
-    resource :suspensions, only: %i[edit update]     
-    
+    resource :suspensions, only: %i[edit update]
+
     resources :applications, only: %i[index show], controller: "users/applications" do
       resource :permissions, only: %i[edit update], controller: "users/permissions"
       resource :signin_permission, only: %i[create destroy], controller: "users/signin_permissions" do
         get :delete
-      end    
-    end 
+      end
+    end
   end
 
   resources :oauth_applications, except: %i[show destroy] do
@@ -54,13 +54,13 @@ Rails.application.routes.draw do
     end
     member do
       get :manage_tokens
-    end  
+    end
     resources :authorisations, only: %i[new create edit], controller: "api_users/authorisations" do
       member do
         post :revoke
       end
-    end      
-  end  
+    end
+  end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

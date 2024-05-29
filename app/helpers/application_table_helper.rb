@@ -12,11 +12,11 @@ module ApplicationTableHelper
       link_to(link_path, class: "me-3") do
         safe_join(
           ["Update permissions",
-           content_tag(:span, " for #{application.name}", class: "visually-hidden")],           
+           content_tag(:span, " for #{application.name}", class: "visually-hidden")],
         )
       end
     else
       ""
     end
-  end 
+  end
 end

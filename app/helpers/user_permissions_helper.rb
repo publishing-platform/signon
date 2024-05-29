@@ -1,5 +1,5 @@
 module UserPermissionsHelper
-  def applications_and_permissions(user)
+  def applications_and_permissions(_user)
     if policy(User).grant_permissions?
       OauthApplication.not_api_only.includes(:permissions)
     else

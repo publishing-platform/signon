@@ -24,7 +24,7 @@ class ApiUsersController < ApplicationController
       redirect_to api_users_path, notice: "Updated user #{@api_user.email} successfully"
     else
       render :edit
-    end  
+    end
   end
 
   def manage_tokens; end
@@ -50,13 +50,13 @@ private
 
   def permitted_api_user_params
     params.require(:api_user).permit(:name, :email).to_h
-  end  
+  end
 
   def sanitised_api_user_params
     UserParameterSanitiser.new(
       permitted_api_user_params,
       current_user.role.to_sym,
-    ).sanitise    
+    ).sanitise
   end
 
   # def api_user_applications_and_permissions(user)
@@ -74,9 +74,9 @@ private
   def paginate_api_users
     page = params.fetch(:page, 1).to_i
     @api_users = @api_users.page(page).per(10)
-  end    
+  end
 
   def filter_params
     params.permit(:name)
-  end  
+  end
 end

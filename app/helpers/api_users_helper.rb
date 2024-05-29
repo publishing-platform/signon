@@ -18,6 +18,6 @@ module ApiUsersHelper
   def authorised_applications(user)
     applications = OauthApplication.includes(:permissions)
     authorised_apps = user.authorisations.where(revoked_at: nil).pluck(:application_id)
-    applications.where(id: authorised_apps)    
+    applications.where(id: authorised_apps)
   end
 end

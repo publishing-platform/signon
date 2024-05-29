@@ -13,10 +13,10 @@ class ApiUser < User
       u.require_2fa = false
       u.api_user = true
     end
-  end  
+  end
 
 private
-  
+
   def require_2fa_is_false
     errors.add(:require_2fa, "can't be true for api user") if require_2fa
   end

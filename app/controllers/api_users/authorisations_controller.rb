@@ -13,7 +13,7 @@ class ApiUsers::AuthorisationsController < ApplicationController
     @authorisation.application_id = params[:authorisation][:application_id]
 
     if @authorisation.save
-      @api_user.grant_application_signin_permission(@authorisation.application)      
+      @api_user.grant_application_signin_permission(@authorisation.application)
       flash[:authorisation] = { application_name: @authorisation.application.name, token: @authorisation.token }
     else
       flash[:error] = "There was an error while creating the access token"
@@ -24,7 +24,7 @@ class ApiUsers::AuthorisationsController < ApplicationController
   def edit; end
 
   def revoke
-    if @authorisation.revoke      
+    if @authorisation.revoke
       flash[:notice] = "Access for #{@authorisation.application.name} was revoked"
     else
       flash[:error] = "There was an error while revoking access for #{@authorisation.application.name}"

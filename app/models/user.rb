@@ -100,7 +100,7 @@ class User < ApplicationRecord
 
   def grant_application_signin_permission(application)
     grant_application_permission(application, Permission::SIGNIN_NAME)
-  end  
+  end
 
   def grant_application_permission(application, permission_name)
     grant_application_permissions(application, [permission_name]).first
@@ -113,7 +113,7 @@ class User < ApplicationRecord
       permission = Permission.find_by(oauth_application_id: application.id, name: permission_name)
       grant_permission(permission)
     end
-  end  
+  end
 
   def grant_permission(permission)
     users_permissions.where(permission_id: permission.id).first_or_create!.permission
@@ -133,7 +133,7 @@ class User < ApplicationRecord
     else
       permissions.any? { |p| p.id == permission.id }
     end
-  end  
+  end
 
   def status
     if suspended?
@@ -149,5 +149,5 @@ class User < ApplicationRecord
 
   def web_user?
     !api_user?
-  end  
+  end
 end
