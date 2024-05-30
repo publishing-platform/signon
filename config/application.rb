@@ -38,6 +38,10 @@ module Signon
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.to_prepare do
+      Doorkeeper::ApplicationController.layout "application"
+    end    
     
     config.eager_load_paths << Rails.root.join("lib")
 

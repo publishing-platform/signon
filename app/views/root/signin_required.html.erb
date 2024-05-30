@@ -1,0 +1,17 @@
+<% content_for :title, signin_required_title(@application) %>
+
+<div class="row">
+  <div class="col-xs-12 col-md-8">
+    <p>
+      Ask your organisation's main publishing platform contact if you need access.
+    </p>
+    <p>
+      If you think something is wrong, try <%= link_to "signing out", destroy_user_session_path %> and then
+      <%- if @application.present? -%>
+        <%= link_to "back in", @application.home_uri -%>
+      <%- else -%>
+        back in
+      <%- end %>.
+      </p>
+  </div>
+</div>
