@@ -41,8 +41,8 @@ module Signon
 
     config.to_prepare do
       Doorkeeper::ApplicationController.layout "application"
-    end    
-    
+    end
+
     config.eager_load_paths << Rails.root.join("lib")
 
     # Using a sass css compressor causes a scss file to be processed twice

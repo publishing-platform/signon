@@ -17,7 +17,7 @@ Doorkeeper.configure do
       redirect_to prompt_two_factor_authentication_path
     else
       user
-    end    
+    end
   end
 
   # If you didn't skip applications controller from Doorkeeper routes in your application routes.rb

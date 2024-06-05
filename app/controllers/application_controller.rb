@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
 
   def application_making_request
     @_application_making_request ||= OauthApplication.find(doorkeeper_token.application_id) if doorkeeper_token
-  end  
+  end
 
 private
 
@@ -43,9 +43,9 @@ private
       render options
     end
     original_return_value
-  end  
+  end
 
   def user_via_token_has_signin_permission_on_app?
     current_resource_owner && application_making_request && current_resource_owner.has_access_to?(application_making_request)
-  end  
+  end
 end

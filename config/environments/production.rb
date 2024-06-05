@@ -62,7 +62,7 @@ Rails.application.configure do
   # Use a real queuing backend for Active Job (and separate queues per environment).
   # config.active_job.queue_adapter = :resque
   # config.active_job.queue_name_prefix = "signon_production"
-  config.action_mailer.default_url_options = { host: "signon.dev.publishing-platform.co.uk" }
+  config.action_mailer.default_url_options = { host: URI(PublishingPlatformLocation.external_url_for("signon")).host }
   config.action_mailer.perform_caching = false
 
   # Ignore bad email addresses and do not raise email delivery errors.
