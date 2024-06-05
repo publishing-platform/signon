@@ -34,7 +34,7 @@ class UserMailer < Devise::Mailer
 
   def email_changed_notification(user)
     @user = user
-    mail(to: @user.email, subject: "Your #{app_name} email address is being changed", template_path: "users/mailer")
+    mail(to: @user.email, subject: "Your #{app_name} email address is being changed")
   end
 
   def password_change(user, _opts = {})
