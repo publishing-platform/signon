@@ -16,7 +16,7 @@
   </p>
 
   <div class="form-check mb-3">
-    <%= check_box :user, :suspended?, class: "form-check-input" %>
+    <%= check_box_tag "user[suspended]", 1, @suspension.suspended?, class: "form-check-input" %>
     <%= label :user, :suspended?, "Suspended?", class: "form-label" %>
   </div>  
 

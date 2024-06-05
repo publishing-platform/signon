@@ -35,7 +35,7 @@ class User < ApplicationRecord
   belongs_to :organisation, optional: true
   has_many :users_permissions
   has_many :permissions, through: :users_permissions
-  has_many :authorisations, class_name: "Doorkeeper::AccessToken", foreign_key: :resource_owner_id
+  has_many :authorisations, class_name: "OauthAccessToken", foreign_key: :resource_owner_id
   has_many :authorised_applications, -> { distinct(:application) }, through: :authorisations, source: :application
 
   # hooks
@@ -139,6 +139,10 @@ class User < ApplicationRecord
       permissions.any? { |p| p.id == permission.id }
     end
   end
+
+  def revoke_all_authorisations
+    authorisations.not_revoked.find_each(&:revoke)
+  end  
 
   def status
     if suspended?

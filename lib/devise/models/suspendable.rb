@@ -31,6 +31,8 @@ module Devise
       def suspend(reason)
         update(reason_for_suspension: reason,
                suspended_at: Time.zone.now)
+        revoke_all_authorisations
+        true
       end
 
       def unsuspend
