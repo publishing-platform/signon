@@ -5,8 +5,6 @@
 
 <% if resource.errors.has_key?(attribute) %>
   <%= tag.div id: id, class: "invalid-feedback" do %>
-    <% resource.errors.full_messages_for(attribute).each do |error| %>
-      <%= error %>
-    <% end %>  
+    <%= raw(resource.errors.full_messages_for(attribute).join("<br />")) %>
   <% end %>
 <% end %>
