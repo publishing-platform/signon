@@ -58,7 +58,7 @@ module Services
         name: organisation_data[:title],
         organisation_type: organisation_data[:format],
         abbreviation: organisation_data[:details][:abbreviation],
-        closed: organisation_data[:details][:devgovuk_status] == "closed",
+        closed: organisation_data[:details][:status] == "closed",
       }
 
       organisation.update!(update_data)
