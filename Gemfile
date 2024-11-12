@@ -19,7 +19,7 @@ gem "rqrcode"
 gem "sassc-rails"
 gem "sprockets-rails"
 gem "tzinfo-data", platforms: %i[mswin mswin64 mingw x64_mingw jruby]
-gem "uglifier"
+gem "terser"
 gem "uuid"
 
 group :development, :test do
