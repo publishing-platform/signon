@@ -24,7 +24,11 @@ gem "uuid"
 
 group :development, :test do
   gem "debug", platforms: %i[mri mswin mswin64 mingw x64_mingw]
+  gem "factory_bot_rails"  
+  gem "publishing_platform_test"
   gem "publishing_platform_rubocop"
+  gem "rspec-rails"
+  gem "timecop"
 end
 
 group :development do
