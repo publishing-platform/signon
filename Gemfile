@@ -18,15 +18,15 @@ gem "rotp"
 gem "rqrcode"
 gem "sassc-rails"
 gem "sprockets-rails"
-gem "tzinfo-data", platforms: %i[mswin mswin64 mingw x64_mingw jruby]
 gem "terser"
+gem "tzinfo-data", platforms: %i[mswin mswin64 mingw x64_mingw jruby]
 gem "uuid"
 
 group :development, :test do
   gem "debug", platforms: %i[mri mswin mswin64 mingw x64_mingw]
-  gem "factory_bot_rails"  
-  gem "publishing_platform_test"
+  gem "factory_bot_rails"
   gem "publishing_platform_rubocop"
+  gem "publishing_platform_test"
   gem "rspec-rails"
   gem "timecop"
 end

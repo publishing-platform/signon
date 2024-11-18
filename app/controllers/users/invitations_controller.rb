@@ -1,4 +1,5 @@
 class Users::InvitationsController < Devise::InvitationsController
+  before_action :authenticate_inviter!, only: %i[new create resend]
   after_action :verify_authorized, except: %i[edit update] # rubocop:disable Rails/LexicallyScopedActionFilter
 
   def new

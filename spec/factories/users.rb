@@ -10,5 +10,23 @@ FactoryBot.define do
   factory :admin_user, parent: :user do
     sequence(:email) { |n| "admin#{n}@example.com" }
     role { "admin" }
-  end  
+  end
+
+  factory :invited_user, parent: :user do
+    invitation_sent_at { 1.minute.ago }
+    invitation_accepted_at { nil }
+  end
+
+  factory :active_user, parent: :invited_user do
+    invitation_accepted_at { Time.current }
+  end
+
+  factory :suspended_user, parent: :user do
+    suspended_at { Time.current }
+    reason_for_suspension { "Testing" }
+  end
+
+  factory :locked_user, parent: :user do
+    locked_at { Time.current }
+  end
 end

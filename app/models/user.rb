@@ -142,12 +142,12 @@ class User < ApplicationRecord
 
   def revoke_all_authorisations
     authorisations.not_revoked.find_each(&:revoke)
-  end  
+  end
 
   def status
     if suspended?
       USER_STATUS_SUSPENDED
-    elsif invited_but_not_yet_accepted?
+    elsif web_user? && invited_but_not_yet_accepted?
       USER_STATUS_INVITED
     elsif access_locked?
       USER_STATUS_LOCKED

@@ -29,8 +29,8 @@ module Devise
       # Return value is checked, so don't raise
       # error on validation failures
       def suspend(reason)
-        update(reason_for_suspension: reason,
-               suspended_at: Time.zone.now)
+        update!(reason_for_suspension: reason,
+                suspended_at: Time.zone.now)
         revoke_all_authorisations
         true
       end
