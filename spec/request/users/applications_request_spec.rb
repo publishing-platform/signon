@@ -44,8 +44,8 @@ RSpec.describe "User applications", type: :request do
 
         expect(response).to have_http_status(:ok)
         expect(response.body).to include("Apps #{user.name} has access to")
-      end 
-    end   
+      end
+    end
   end
 
   describe "GET show" do
@@ -88,8 +88,8 @@ RSpec.describe "User applications", type: :request do
       it "redirects to user applications list" do
         get user_application_path(user, application)
 
-        expect(response).to redirect_to(user_applications_path(user))   
-      end 
-    end   
+        expect(response).to redirect_to(user_applications_path(user))
+      end
+    end
   end
 end

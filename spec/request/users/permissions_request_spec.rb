@@ -46,8 +46,8 @@ RSpec.describe "User permissions", type: :request do
 
         expect(response).to have_http_status(:ok)
         expect(response.body).to include(CGI.escapeHTML("Update #{user.name}'s permissions for #{application.name}"))
-      end 
-    end   
+      end
+    end
   end
 
   describe "PUT update" do
@@ -58,7 +58,7 @@ RSpec.describe "User permissions", type: :request do
         assert_not_authenticated
       end
     end
-  
+
     context "when user is a normal user" do
       before do
         user.grant_application_signin_permission(application)
@@ -94,7 +94,7 @@ RSpec.describe "User permissions", type: :request do
         follow_redirect!
 
         expect(response.body).to include("Permissions successfully updated")
-      end 
-    end       
+      end
+    end
   end
 end
