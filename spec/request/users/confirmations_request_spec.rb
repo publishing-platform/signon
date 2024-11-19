@@ -13,7 +13,7 @@ RSpec.describe "Confirmations", type: :request do
 
       expect(response.body).to include("Please contact support to request a new confirmation email.")
     end
-  end  
+  end
 
   describe "POST create" do
     it "is disabled" do
@@ -24,5 +24,5 @@ RSpec.describe "Confirmations", type: :request do
 
       expect(response.body).to include("Please contact support to request a new confirmation email.")
     end
-  end    
+  end
 end

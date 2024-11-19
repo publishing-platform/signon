@@ -27,6 +27,6 @@ RSpec.describe "Permissions", type: :request do
 
         assert_not_authorised
       end
-    end    
+    end
   end
 end
