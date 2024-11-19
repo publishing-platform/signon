@@ -38,3 +38,7 @@
 
 /config/master.key
 /config/credentials/production.key
+
+# Simplecov
+coverage/*
+test/reports/*
