@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Invitations", type: :request do
+RSpec.describe "User invitations", type: :request do
   let(:user) { create(:user) }
   let!(:organisation) { create(:organisation) }
 
@@ -39,7 +39,7 @@ RSpec.describe "Invitations", type: :request do
         sign_out user
       end
 
-      it "allows access" do
+      it "displays new user form" do
         get new_user_invitation_path
 
         expect(response).to have_http_status(:ok)
@@ -83,7 +83,7 @@ RSpec.describe "Invitations", type: :request do
         sign_out user
       end
 
-      it "allows access" do
+      it "sends invitation to new user" do
         post user_invitation_path, params: { user: { name: "Test", email: "test@test.co.uk" } }
         follow_redirect!
 
@@ -129,7 +129,7 @@ RSpec.describe "Invitations", type: :request do
         sign_out user
       end
 
-      it "allows access" do
+      it "resends signup email" do
         put resend_user_invitation_path(invited)
         follow_redirect!
 

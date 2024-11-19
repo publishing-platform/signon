@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Confirmations", type: :request do
+RSpec.describe "User confirmations", type: :request do
   # let(:user) { create(:user) }
   # let!(:organisation) { create(:organisation) }
 
