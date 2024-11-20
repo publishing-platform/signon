@@ -45,7 +45,7 @@ RSpec.describe "User signin permissions", type: :request do
         expect(response).to redirect_to(user_applications_path(user))
         follow_redirect!
 
-        expect(response.body).to include(delete_user_application_signin_permission_path(user, application))        
+        expect(response.body).to include(delete_user_application_signin_permission_path(user, application))
       end
     end
   end
@@ -139,8 +139,8 @@ RSpec.describe "User signin permissions", type: :request do
         expect(response).to redirect_to(user_applications_path(user))
         follow_redirect!
 
-        expect(response.body).not_to include(delete_user_application_signin_permission_path(user, application))        
+        expect(response.body).not_to include(delete_user_application_signin_permission_path(user, application))
       end
     end
-  end  
+  end
 end
