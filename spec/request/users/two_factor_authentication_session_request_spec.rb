@@ -21,5 +21,5 @@ RSpec.describe "User two factor authentication session", type: :request do
         assert_not_authenticated
       end
     end
-  end 
+  end
 end

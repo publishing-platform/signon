@@ -21,7 +21,7 @@ RSpec.describe "User two factor authentication", type: :request do
         assert_not_authenticated
       end
     end
-  end  
+  end
 
   describe "PUT update" do
     context "when user is not authenticated" do
@@ -31,5 +31,5 @@ RSpec.describe "User two factor authentication", type: :request do
         assert_not_authenticated
       end
     end
-  end    
+  end
 end
