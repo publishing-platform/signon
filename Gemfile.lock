@@ -114,7 +114,6 @@ GEM
     doorkeeper (5.8.0)
       railties (>= 5)
     drb (2.2.1)
-    error_highlight (0.6.0)
     erubi (1.13.0)
     execjs (2.10.0)
     factory_bot (6.5.0)
@@ -371,7 +370,6 @@ DEPENDENCIES
   devise (~> 4.9)
   devise_invitable (~> 2.0.0)
   doorkeeper
-  error_highlight (>= 0.4.0)
   factory_bot_rails
   jbuilder
   jsbundling-rails
