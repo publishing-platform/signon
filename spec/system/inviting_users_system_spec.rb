@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Inviting users", type: :system do
   let(:user) { create(:admin_user) }
-  let!(:organisation) { create(:organisation) }
+  # let!(:organisation) { create(:organisation) }
 
   before do
     visit new_user_session_path

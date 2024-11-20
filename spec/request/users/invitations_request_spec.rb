@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "User invitations", type: :request do
   let(:user) { create(:user) }
-  let!(:organisation) { create(:organisation) }
+  # let!(:organisation) { create(:organisation) }
 
   describe "GET new" do
     context "when user is not authenticated" do
