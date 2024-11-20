@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - ".git**"
+  pull_request:
+
+jobs:
+  lint-scss:
+    name: Lint SCSS
+    uses: publishing-platform/publishing-platform-infrastructure/.github/workflows/stylelint.yml@main
+    with:
+      files: "app/assets/stylesheets/"
+
+  lint-javascript:
+    name: Lint JavaScript
+    uses: publishing-platform/publishing-platform-infrastructure/.github/workflows/standardx.yml@main
+    with:
+      files: "'app/javascripts/**/*.js'"
+
+  lint-ruby:
+    name: Lint Ruby
+    uses: publishing-platform/publishing-platform-infrastructure/.github/workflows/rubocop.yml@main
