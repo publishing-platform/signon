@@ -1,12 +1,26 @@
 {
   "name": "app",
   "private": true,
+  "scripts": {
+    "build": "rollup -c --bundleConfigAsCjs rollup.config.js",
+    "lint": "yarn run lint:js && yarn run lint:scss",
+    "lint:js": "standardx 'app/javascript/**/*.js'",
+    "lint:scss": "stylelint app/assets/stylesheets/"
+  },
+  "stylelint": {
+    "extends": "stylelint-config-standard-scss",
+    "rules": {
+      "selector-class-pattern": null
+    }
+  },
   "dependencies": {
-    "bootstrap": "^5.3.3",
     "@rollup/plugin-node-resolve": "^15.2.3",
+    "bootstrap": "^5.3.3",
     "rollup": "^4.17.2"
   },
-  "scripts": {
-    "build": "rollup -c --bundleConfigAsCjs rollup.config.js"
+  "devDependencies": {
+    "standardx": "^7.0.0",
+    "stylelint": "^16.10.0",
+    "stylelint-config-standard-scss": "^13.1.0"
   }
 }
