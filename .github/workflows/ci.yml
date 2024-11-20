@@ -20,7 +20,7 @@ jobs:
     name: Lint JavaScript
     uses: publishing-platform/publishing-platform-infrastructure/.github/workflows/standardx.yml@main
     with:
-      files: "'app/javascripts/**/*.js'"
+      files: "'app/javascript/**/*.js'"
 
   lint-ruby:
     name: Lint Ruby
