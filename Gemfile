@@ -37,4 +37,5 @@ end
 
 group :test do
   gem "simplecov"
+  gem "capybara-email"
 end

@@ -74,6 +74,7 @@ RSpec.configure do |config|
 
   config.include UserHelpers, type: :system
   config.include RequestSpecHelper, type: :request
+  config.include EmailHelpers
 
   config.before(:each, type: :system) do
     driven_by :headless_chrome

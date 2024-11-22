@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.describe "User invitations", type: :request do
   let(:user) { create(:user) }
-  # let!(:organisation) { create(:organisation) }
 
   describe "GET new" do
     context "when user is not authenticated" do
@@ -83,12 +82,40 @@ RSpec.describe "User invitations", type: :request do
         sign_out user
       end
 
-      it "sends invitation to new user" do
-        post user_invitation_path, params: { user: { name: "Test", email: "test@test.co.uk" } }
-        follow_redirect!
-
-        expect(response.body).to include("An invitation email has been sent to test@test.co.uk")
+      context "and valid parameters are provided" do
+        it "sends invitation to new user" do
+          post user_invitation_path, params: { user: { name: "Test", email: "test@test.co.uk" } }
+          follow_redirect!
+  
+          expect(response.body).to include("An invitation email has been sent to test@test.co.uk")
+        end
       end
+
+      context "and email is blank" do
+        it "displays validation error" do
+          post user_invitation_path, params: { user: { name: "Test" } }
+          expect(response.body).to include("Email can't be blank")
+        end
+
+        it "does not create user" do
+          expect {
+            post user_invitation_path, params: { user: { name: "Test" } }
+          }. to change(User, :count).by(0)
+        end        
+      end
+
+      context "and name is blank" do
+        it "displays validation error" do
+          post user_invitation_path, params: { user: { email: "test@test.co.uk" } }
+          expect(response.body).to include("Name can't be blank")
+        end
+
+        it "does not create user" do
+          expect {
+            post user_invitation_path, params: { user: { email: "test@test.co.uk" } }
+          }. to change(User, :count).by(0)
+        end        
+      end      
     end
   end
 

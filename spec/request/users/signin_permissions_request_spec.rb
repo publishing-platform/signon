@@ -47,6 +47,18 @@ RSpec.describe "User signin permissions", type: :request do
 
         expect(response.body).to include(delete_user_application_signin_permission_path(user, application))
       end
+
+      it "sets not found status code if user does not exist" do
+        post user_application_signin_permission_path({ user_id: "non-existent-user-id" }, application)
+
+        expect(response).to have_http_status(:not_found)       
+      end
+
+      it "sets not found status code if application does not exist" do
+        post user_application_signin_permission_path(user, { application_id: "non-existent-application-id" })
+
+        expect(response).to have_http_status(:not_found)       
+      end        
     end
   end
 
@@ -93,6 +105,25 @@ RSpec.describe "User signin permissions", type: :request do
         expect(response).to have_http_status(:ok)
         expect(response.body).to include("Are you sure you want to remove #{user.name}'s access to #{application.name}?")
       end
+
+      it "sets not found status code if user does not exist" do
+        get delete_user_application_signin_permission_path({ user_id: "non-existent-user-id" }, application)
+
+        expect(response).to have_http_status(:not_found)       
+      end
+
+      it "sets not found status code if application does not exist" do
+        get delete_user_application_signin_permission_path(user, { application_id: "non-existent-application-id" })
+
+        expect(response).to have_http_status(:not_found)       
+      end   
+      
+      it "sets not found status code if user does not have signin permission on application" do
+        user_without_signin = create(:admin_user)
+        get delete_user_application_signin_permission_path(user_without_signin, application)
+
+        expect(response).to have_http_status(:not_found)       
+      end      
     end
   end
 
@@ -141,6 +172,25 @@ RSpec.describe "User signin permissions", type: :request do
 
         expect(response.body).not_to include(delete_user_application_signin_permission_path(user, application))
       end
+
+      it "sets not found status code if user does not exist" do
+        delete user_application_signin_permission_path({ user_id: "non-existent-user-id" }, application)
+
+        expect(response).to have_http_status(:not_found)       
+      end
+
+      it "sets not found status code if application does not exist" do
+        delete user_application_signin_permission_path(user, { application_id: "non-existent-application-id" })
+
+        expect(response).to have_http_status(:not_found)       
+      end   
+      
+      it "sets not found status code if user does not have signin permission on application" do
+        user_without_signin = create(:admin_user)
+        delete user_application_signin_permission_path(user_without_signin, application)
+
+        expect(response).to have_http_status(:not_found)       
+      end        
     end
   end
 end
