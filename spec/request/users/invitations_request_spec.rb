@@ -94,7 +94,7 @@ RSpec.describe "User invitations", type: :request do
           expect {
             post user_invitation_path, params: { user: { name: "Test", email: "test@test.co.uk" } }
           }.to change(User, :count).by(1)
-        end        
+        end
       end
 
       context "and email is blank" do
