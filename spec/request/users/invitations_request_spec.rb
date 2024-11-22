@@ -89,6 +89,12 @@ RSpec.describe "User invitations", type: :request do
 
           expect(response.body).to include("An invitation email has been sent to test@test.co.uk")
         end
+
+        it "creates user" do
+          expect {
+            post user_invitation_path, params: { user: { name: "Test", email: "test@test.co.uk" } }
+          }.to change(User, :count).by(1)
+        end        
       end
 
       context "and email is blank" do
