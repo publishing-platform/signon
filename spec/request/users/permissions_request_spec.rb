@@ -51,14 +51,14 @@ RSpec.describe "User permissions", type: :request do
       it "sets not found status code if user does not exist" do
         get edit_user_application_permissions_path({ user_id: "non-existent-user-id" }, application)
 
-        expect(response).to have_http_status(:not_found)       
+        expect(response).to have_http_status(:not_found)
       end
 
       it "sets not found status code if application does not exist" do
         get edit_user_application_permissions_path(user, { application_id: "non-existent-application-id" })
 
-        expect(response).to have_http_status(:not_found)       
-      end      
+        expect(response).to have_http_status(:not_found)
+      end
     end
   end
 
@@ -111,14 +111,14 @@ RSpec.describe "User permissions", type: :request do
       it "sets not found status code if user does not exist" do
         put user_application_permissions_path({ user_id: "non-existent-user-id" }, application)
 
-        expect(response).to have_http_status(:not_found)       
+        expect(response).to have_http_status(:not_found)
       end
 
       it "sets not found status code if application does not exist" do
         put user_application_permissions_path(user, { application_id: "non-existent-application-id" })
 
-        expect(response).to have_http_status(:not_found)       
-      end        
+        expect(response).to have_http_status(:not_found)
+      end
     end
   end
 end

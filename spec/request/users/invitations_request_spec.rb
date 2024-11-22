@@ -86,7 +86,7 @@ RSpec.describe "User invitations", type: :request do
         it "sends invitation to new user" do
           post user_invitation_path, params: { user: { name: "Test", email: "test@test.co.uk" } }
           follow_redirect!
-  
+
           expect(response.body).to include("An invitation email has been sent to test@test.co.uk")
         end
       end
@@ -100,8 +100,8 @@ RSpec.describe "User invitations", type: :request do
         it "does not create user" do
           expect {
             post user_invitation_path, params: { user: { name: "Test" } }
-          }. to change(User, :count).by(0)
-        end        
+          }.to change(User, :count).by(0)
+        end
       end
 
       context "and name is blank" do
@@ -113,9 +113,9 @@ RSpec.describe "User invitations", type: :request do
         it "does not create user" do
           expect {
             post user_invitation_path, params: { user: { email: "test@test.co.uk" } }
-          }. to change(User, :count).by(0)
-        end        
-      end      
+          }.to change(User, :count).by(0)
+        end
+      end
     end
   end
 
