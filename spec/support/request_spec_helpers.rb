@@ -1,4 +1,4 @@
-module RequestSpecHelper
+module RequestSpecHelpers
   include Warden::Test::Helpers
 
   def self.included(base)

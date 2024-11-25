@@ -73,7 +73,7 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   config.include UserHelpers, type: :system
-  config.include RequestSpecHelper, type: :request
+  config.include RequestSpecHelpers, type: :request
   config.include EmailHelpers
 
   config.before(:each, type: :system) do

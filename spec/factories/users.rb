@@ -29,4 +29,38 @@ FactoryBot.define do
   factory :locked_user, parent: :user do
     locked_at { Time.current }
   end
+
+  factory :api_user do
+    transient do
+      with_permissions { {} }
+      with_signin_permissions_for { [] }
+    end
+
+    sequence(:email) { |n| "api-#{n}@example.com" }
+    password { "this 1s 4 v3333ry s3cur3 p4ssw0rd.!Z" }
+    confirmed_at { 1.day.ago }
+    name { "API User" }
+
+    api_user { true }
+
+    require_2fa { false }
+
+    after(:create) do |user, evaluator|
+      evaluator.with_permissions.each do |app_or_name, permission_names|
+        user.grant_application_permissions(find_application(app_or_name), permission_names)
+      end
+
+      evaluator.with_signin_permissions_for.each do |app_or_name|
+        user.grant_application_signin_permission(find_application(app_or_name))
+      end
+    end
+  end
+end
+
+def find_application(app_or_name)
+  if app_or_name.is_a?(String)
+    OauthApplication.where(name: app_or_name).first!
+  else
+    app_or_name
+  end
 end
