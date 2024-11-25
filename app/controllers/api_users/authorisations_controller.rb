@@ -27,7 +27,7 @@ class ApiUsers::AuthorisationsController < ApplicationController
     if @authorisation.revoke
       flash[:notice] = "Access for #{@authorisation.application.name} was revoked"
     else
-      flash[:error] = "There was an error while revoking access for #{@authorisation.application.name}"
+      flash[:alert] = "There was an error while revoking access for #{@authorisation.application.name}"
     end
     redirect_to manage_tokens_api_user_path(@api_user)
   end

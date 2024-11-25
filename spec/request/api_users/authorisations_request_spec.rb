@@ -241,6 +241,40 @@ RSpec.describe "API User authorisations", type: :request do
         expect(access_token.reload.revoked?).to be true
       end
 
+      it "redirects to manage tokens page" do
+        post revoke_api_user_authorisation_path(api_user, access_token)
+
+        expect(response).to redirect_to(manage_tokens_api_user_path(api_user))
+      end
+
+      it "displays success notice" do
+        post revoke_api_user_authorisation_path(api_user, access_token)
+        follow_redirect!
+
+        expect(response.body).to include("Access for #{access_token.application.name} was revoked")
+      end
+
+      context "when revocation fails" do
+        before do
+          allow(ApiUser).to receive(:find).and_return(api_user)
+          allow(api_user.authorisations).to receive(:find).and_return(access_token)
+          allow(access_token).to receive(:revoke).and_return(false)
+        end
+
+        it "redirects to manage tokens page" do
+          post revoke_api_user_authorisation_path(api_user, access_token)
+
+          expect(response).to redirect_to(manage_tokens_api_user_path(api_user))
+        end
+
+        it "displays error notice" do
+          post revoke_api_user_authorisation_path(api_user, access_token)
+          follow_redirect!
+
+          expect(response.body).to include("There was an error while revoking access for #{access_token.application.name}")
+        end
+      end
+
       # context "and valid parameters are provided" do
       #   it "authorises access" do
       #     post api_user_authorisations_path(api_user, params: { authorisation: { application_id: application.id } })
