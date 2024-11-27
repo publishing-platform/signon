@@ -24,6 +24,12 @@ RSpec.describe "Inviting users", type: :system do
     visit path
 
     expect(page).to have_text("Set your password")
+
+    fill_in "New password", with: "this 1s 4 v3333ry s3cur3 p4ssw0rd.!Z"
+    fill_in "Confirm new password", with: "this 1s 4 v3333ry s3cur3 p4ssw0rd.!Z"
+    click_button "Save password"
+
+    expect(page).to have_text("Your password was set successfully.")
   end
 
   it "allows invitation to be resent" do
