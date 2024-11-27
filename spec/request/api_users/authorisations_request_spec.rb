@@ -275,38 +275,23 @@ RSpec.describe "API User authorisations", type: :request do
         end
       end
 
-      # context "and valid parameters are provided" do
-      #   it "authorises access" do
-      #     post api_user_authorisations_path(api_user, params: { authorisation: { application_id: application.id } })
+      it "sets not found status code if user does not exist" do
+        post revoke_api_user_authorisation_path({ api_user_id: "non-existent-api-user-id" }, access_token)
 
-      #     expect(response).to redirect_to(manage_tokens_api_user_path(api_user))
-      #     follow_redirect!
+        expect(response).to have_http_status(:not_found)
+      end
 
-      #     expect(response.body).to include("Token created")
-      #   end
+      it "sets not found status code if not api user" do
+        post revoke_api_user_authorisation_path(user, access_token)
 
-      #   it "creates access token" do
-      #     expect {
-      #       post api_user_authorisations_path(api_user, params: { authorisation: { application_id: application.id } })
-      #     }.to change(OauthAccessToken, :count).by(1)
-      #   end
-      # end
+        expect(response).to have_http_status(:not_found)
+      end
 
-      # context "and application is blank" do
-      #   it "raises not null violation error" do
-      #     expect {
-      #       post api_user_authorisations_path(api_user, params: { authorisation: { application_id: nil } })
-      #     }.to raise_error(ActiveRecord::NotNullViolation)
-      #   end
-      # end
+      it "sets not found status code if access token does not exist" do
+        post revoke_api_user_authorisation_path(api_user, { id: "non-existent-access-token-id" })
 
-      # context "and application does not exist" do
-      #   it "raises invalid foreign key error" do
-      #     expect {
-      #       post api_user_authorisations_path(api_user, params: { authorisation: { application_id: "non-existent-application-id" } })
-      #     }.to raise_error(ActiveRecord::InvalidForeignKey)
-      #   end
-      # end
+        expect(response).to have_http_status(:not_found)
+      end
     end
   end
 end
