@@ -1,7 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!, except: :show
-
-  def show; end
+  before_action :authenticate_user!
 
   def index
     authorize User
