@@ -141,4 +141,64 @@ RSpec.describe "Users", type: :request do
       end
     end
   end
+
+  describe "GET edit" do
+    context "when user is not authenticated" do
+      it "redirects user to sign in" do
+        another_user = create(:user)
+
+        get edit_user_path(another_user)
+
+        assert_not_authenticated
+      end
+    end
+
+    context "when user is a normal user" do
+      before do
+        sign_in user
+      end
+
+      after do
+        sign_out user
+      end
+
+      it "does not allow access" do
+        another_user = create(:user)
+
+        get edit_user_path(another_user)
+
+        assert_not_authorised
+      end
+    end
+
+    context "when user is an admin user" do
+      before do
+        user.update!(role: "admin")
+        sign_in user
+      end
+
+      after do
+        sign_out user
+      end
+
+      it "renders a form for editing existing user" do
+        another_user = create(:user)
+
+        get edit_user_path(another_user)
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include("Edit #{another_user.name}")
+        assert_select "input[name='user[email]']"
+        assert_select "input[name='user[name]']"
+        assert_select "select[name='user[role]']"
+        assert_select "select[name='user[organisation_id]']"
+      end
+
+      it "sets not found status code if the user does not exist" do
+        get edit_user_path(user, { id: "non-existent-user-id" })
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
 end
