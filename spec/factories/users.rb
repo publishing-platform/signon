@@ -30,6 +30,13 @@ FactoryBot.define do
     locked_at { Time.current }
   end
 
+  factory :user_with_pending_email_change, parent: :user do
+    email { "old@email.com" }
+    unconfirmed_email { "new@email.com" }
+    sequence(:confirmation_token) { |n| "#{n}a1s2d3" }
+    confirmation_sent_at { Time.current }
+  end
+
   factory :api_user do
     transient do
       with_permissions { {} }

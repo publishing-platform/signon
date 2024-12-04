@@ -612,4 +612,104 @@ RSpec.describe "Users", type: :request do
       end
     end
   end
+
+  describe "PUT resend_email_change_user_path" do
+    context "when user is not authenticated" do
+      it "redirects user to sign in" do
+        put resend_email_change_user_path(user)
+
+        assert_not_authenticated
+      end
+    end
+
+    context "when user is authenticated" do
+      let(:user) { create(:user_with_pending_email_change) }
+
+      before do
+        sign_in user
+      end
+
+      after do
+        sign_out user
+      end
+
+      context "and is a normal user" do
+        context "and is resending for own account" do
+          it "sends an email change confirmation email" do
+            put resend_email_change_user_path(user)
+
+            expect(last_email.subject).to eql "Confirm your email change"
+          end
+
+          it "redirects and displays success message" do
+            put resend_email_change_user_path(user)
+
+            expect(response).to redirect_to(root_path)
+            follow_redirect!
+
+            expect(response.body).to include("An email has been sent to #{user.unconfirmed_email}. Follow the link in the email to update your address.")
+          end
+        end
+
+        context "and is resending for another user's account" do
+          it "does not allow access" do
+            another_user = create(:user)
+
+            put resend_email_change_user_path(another_user)
+
+            assert_not_authorised
+          end
+        end
+      end
+
+      context "and is an admin user" do
+        let(:user) { create(:admin_user) }
+        let(:another_user) { create(:user_with_pending_email_change) }
+
+        it "sends an email change confirmation email for another user's account" do
+          put resend_email_change_user_path(another_user)
+
+          expect(last_email.subject).to eql "Confirm your email change"
+        end
+
+        it "redirects and displays success message" do
+          put resend_email_change_user_path(another_user)
+
+          expect(response).to redirect_to(root_path)
+          follow_redirect!
+
+          expect(response.body).to include("Successfully resent email change email to #{another_user.unconfirmed_email}")
+        end
+
+        it "redirects and displays error message if user is not pending email change confirmation" do
+          another_user = create(:user)
+
+          put resend_email_change_user_path(another_user)
+
+          expect(response).to redirect_to(edit_user_path(another_user))
+          follow_redirect!
+
+          expect(response.body).to include("Failed to send email change email")
+        end
+
+        it "redirects and displays error message when there is a model error" do
+          another_user.errors.add(:email)
+          allow(User).to receive(:find).with(another_user.id.to_s).and_return(another_user)
+
+          put resend_email_change_user_path(another_user)
+
+          expect(response).to redirect_to(edit_user_path(another_user))
+          follow_redirect!
+
+          expect(response.body).to include("Failed to send email change email")
+        end
+      end
+
+      it "sets not found status code if the user does not exist" do
+        put resend_email_change_user_path({ id: "non-existent-user-id" })
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
 end
