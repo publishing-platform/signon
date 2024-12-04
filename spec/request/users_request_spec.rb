@@ -251,7 +251,7 @@ RSpec.describe "Users", type: :request do
       end
 
       it "sets not found status code if the user does not exist" do
-        get edit_user_path(user, { id: "non-existent-user-id" })
+        get edit_user_path({ id: "non-existent-user-id" })
 
         expect(response).to have_http_status(:not_found)
       end
@@ -428,6 +428,101 @@ RSpec.describe "Users", type: :request do
 
           assert_select "form[action='#{cancel_email_change_user_path(user)}'] input[type='submit'][value='Cancel email change']"
         end
+      end
+
+      it "sets not found status code if the user does not exist" do
+        get edit_email_or_password_user_path({ id: "non-existent-user-id" })
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
+
+  describe "PATCH update_email" do
+    context "when user is not authenticated" do
+      it "redirects user to sign in" do
+        patch update_email_user_path(user)
+
+        assert_not_authenticated
+      end
+    end
+
+    context "when user is authenticated" do
+      before do
+        sign_in user
+      end
+
+      after do
+        sign_out user
+      end
+
+      it "updates user, sends confirmation email to new address and email change notification to old address" do
+        perform_enqueued_jobs do
+          old_email = user.email
+
+          patch update_email_user_path(user), params: { user: { email: "new@email.com" } }
+
+          user.reload
+
+          expect(user.unconfirmed_email).to eql("new@email.com")
+          expect(user.email).to eql(old_email)
+
+          confirmation_email = all_emails[-2]
+
+          expect(confirmation_email.subject).to eql("Confirm your email change")
+          expect(confirmation_email.to.first).to eql("new@email.com")
+
+          email_changed_email = all_emails[-1]
+
+          expect(email_changed_email.subject).to eql("Your Publishing Platform Signon development email address is being changed")
+          expect(email_changed_email.to.first).to eql(old_email)
+        end
+      end
+
+      it "redirects and displays success message" do
+        patch update_email_user_path(user), params: { user: { email: "new@email.com" } }
+
+        expect(response).to redirect_to(root_path)
+        follow_redirect!
+
+        expect(response.body).to include("An email has been sent to new@email.com. Follow the link in the email to update your address.")
+      end
+
+      it "does nothing if new email address is same as old address" do
+        patch update_email_user_path(user), params: { user: { email: user.email } }
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include("Nothing to update.")
+      end
+
+      it "displays error and does not update user if email is not provided" do
+        old_email = user.email
+
+        patch update_email_user_path(user), params: { user: { email: "" } }
+
+        expect(response).to have_http_status(:ok)
+
+        expect(response.body).to include("Email can't be blank")
+
+        expect(user.reload.email).to eql(old_email)
+      end
+
+      it "displays error and does not update user if email provided is invalid" do
+        old_email = user.email
+
+        patch update_email_user_path(user), params: { user: { email: "invalid-email" } }
+
+        expect(response).to have_http_status(:ok)
+
+        expect(response.body).to include("Email is invalid")
+
+        expect(user.reload.email).to eql(old_email)
+      end
+
+      it "sets not found status code if the user does not exist" do
+        patch update_email_user_path({ id: "non-existent-user-id" })
+
+        expect(response).to have_http_status(:not_found)
       end
     end
   end
