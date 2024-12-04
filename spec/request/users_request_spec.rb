@@ -526,4 +526,90 @@ RSpec.describe "Users", type: :request do
       end
     end
   end
+
+  describe "PATCH update_password" do
+    context "when user is not authenticated" do
+      it "redirects user to sign in" do
+        patch update_password_user_path(user)
+
+        assert_not_authenticated
+      end
+    end
+
+    context "when user is authenticated" do
+      let(:original_password) { "bf3b2cc3bb659ad6e740533b06c0b899" }
+      let(:new_password) { "0871feaffef29223358cbf086b4084c4" }
+      let(:user) { create(:user, password: original_password) }
+
+      before do
+        sign_in user
+      end
+
+      after do
+        sign_out user
+      end
+
+      it "update password if password is sufficiently strong" do
+        patch update_password_user_path(user), params: { user: {
+          current_password: original_password,
+          password: new_password,
+          password_confirmation: new_password,
+        } }
+
+        expect(user.reload.valid_password?(new_password)).to be true
+
+        expect(response).to redirect_to(root_path)
+        follow_redirect!
+
+        expect(response.body).to include("Your password has been changed successfully. You are now signed in.")
+      end
+
+      it "displays error and does not update password if password is too short" do
+        new_password = "5ef48BE84"
+
+        patch update_password_user_path(user), params: { user: {
+          current_password: original_password,
+          password: new_password,
+          password_confirmation: new_password,
+        } }
+
+        expect(user.reload.valid_password?(original_password)).to be true
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include("Password is too short (minimum is 10 characters)")
+      end
+
+      it "displays error and does not update password if current password is blank" do
+        patch update_password_user_path(user), params: { user: {
+          current_password: "",
+          password: new_password,
+          password_confirmation: new_password,
+        } }
+
+        expect(user.reload.valid_password?(original_password)).to be true
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include("Current password can't be blank")
+      end
+
+      it "displays error and does not update password if password confirmation does not match password" do
+        patch update_password_user_path(user), params: { user: {
+          current_password: original_password,
+          password: new_password,
+          password_confirmation: "#{new_password}extra",
+        } }
+
+        expect(user.reload.valid_password?(original_password)).to be true
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include("Password confirmation doesn't match Password")
+      end
+
+      it "sets not found status code if the user does not exist" do
+        patch update_password_user_path({ id: "non-existent-user-id" })
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
 end
