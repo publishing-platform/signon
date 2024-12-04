@@ -364,4 +364,71 @@ RSpec.describe "Users", type: :request do
       end
     end
   end
+
+  describe "GET edit_email_or_password" do
+    context "when user is not authenticated" do
+      it "redirects user to sign in" do
+        get edit_email_or_password_user_path(user)
+
+        assert_not_authenticated
+      end
+    end
+
+    context "when user is authenticated" do
+      before do
+        sign_in user
+      end
+
+      after do
+        sign_out user
+      end
+
+      it "does not allow access to edit another user's email or password" do
+        another_user = create(:user)
+
+        get edit_email_or_password_user_path(another_user)
+
+        assert_not_authorised
+      end
+
+      it "renders a form for editing user's own email" do
+        get edit_email_or_password_user_path(user)
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include("Edit your account")
+
+        assert_select "form[action='#{update_email_user_path(user)}'] input[name='user[email]']"
+      end
+
+      it "renders a form for editing user's own password" do
+        get edit_email_or_password_user_path(user)
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include("Edit your account")
+
+        assert_select "form[action='#{update_password_user_path(user)}']" do
+          assert_select "input[name='user[password]'][type='password']"
+          assert_select "input[name='user[password_confirmation]'][type='password']"
+        end
+      end
+
+      context "and they have a pending email change" do
+        before do
+          user.update!(unconfirmed_email: "unconfirmed@email.com")
+        end
+
+        it "renders a form to resend confirmation email for a user who has a pending email change" do
+          get edit_email_or_password_user_path(user)
+
+          assert_select "form[action='#{resend_email_change_user_path(user)}'] input[type='submit'][value='Resend confirmation email']"
+        end
+
+        it "renders a form to cancel email change for a user who has a pending email change" do
+          get edit_email_or_password_user_path(user)
+
+          assert_select "form[action='#{cancel_email_change_user_path(user)}'] input[type='submit'][value='Cancel email change']"
+        end
+      end
+    end
+  end
 end
