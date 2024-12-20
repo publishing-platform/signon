@@ -9,27 +9,8 @@ on:
 
 jobs:
   release:
-    # if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
-    # name: Release
-    # uses: publishing-platform/publishing-platform-infrastructure/.github/workflows/release.yml@main
-    # secrets:
-    #   GH_TOKEN: ${{ secrets.PUBLISHING_PLATFORM_CI_GITHUB_API_TOKEN }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check deploy permissions
-        id: deploy-permissions
-        env:
-          GH_TOKEN: ${{ secrets.PUBLISHING_PLATFORM_CI_GITHUB_API_TOKEN  }}
-          GITHUB_TEAM: publishing-platform-production-admin # TODO: might need to change this for publishing-platform-ci user
-          GITHUB_USER: ${{ github.triggering_actor }}
-          TRIGGERING_ACTOR: ${{ github.triggering_actor }}
-        run: |
-          TEAM_MEMBERSHIP=$(gh api "orgs/publishing-platform/teams/publishing-platform-ci-bots/memberships/$GITHUB_USER" -q .state || echo false)
-          TEAM_MEMBERSHIP=$(gh api "orgs/publishing-platform/teams/publishing-platform-production-admin/memberships/$GITHUB_USER" -q .state || echo false)
-
-          echo "Team membership: $TEAM_MEMBERSHIP"
-
-          if ! [[ "$TEAM_MEMBERSHIP" = active || "$ENVIRONMENT" = integration ]]; then
-            echo "::error title=Insufficient permissions to deploy::User $TRIGGERING_ACTOR needs to be a member of the Publishing Platform Production Admin team"
-            exit 1
-          fi    
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    name: Release
+    uses: publishing-platform/publishing-platform-infrastructure/.github/workflows/release.yml@main
+    secrets:
+      GH_TOKEN: ${{ secrets.PUBLISHING_PLATFORM_CI_GITHUB_API_TOKEN }}
