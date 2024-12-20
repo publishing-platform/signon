@@ -15,7 +15,7 @@ COPY package.json yarn.lock ./
 RUN yarn install
 COPY . .
 RUN bootsnap precompile --gemfile .
-RUN rails assets:precompile && rm -fr log
+RUN rails assets:precompile
 
 FROM $base_image
 
