@@ -27,7 +27,11 @@ jobs:
     name: Build and publish image
     uses: publishing-platform/publishing-platform-infrastructure/.github/workflows/build-and-push-image.yml@main
     with:
-      gitRef: ${{ inputs.gitRef || github.event.release.tag_name }} 
+      gitRef: ${{ inputs.gitRef || github.event.release.tag_name }}
+    permissions:
+      id-token: write
+      contents: read
+      packages: write      
   # trigger-deploy:
   #   name: Trigger deploy to ${{ inputs.environment || 'integration' }}
   #   needs: build-and-publish-image
