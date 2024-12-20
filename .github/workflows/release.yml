@@ -19,7 +19,7 @@ jobs:
       - name: Check deploy permissions
         id: deploy-permissions
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.PUBLISHING_PLATFORM_CI_GITHUB_API_TOKEN  }}
           GITHUB_TEAM: publishing-platform-production-admin # TODO: might need to change this for publishing-platform-ci user
           GITHUB_USER: ${{ github.triggering_actor }}
           TRIGGERING_ACTOR: ${{ github.triggering_actor }}
