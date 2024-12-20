@@ -25,6 +25,7 @@ jobs:
           TRIGGERING_ACTOR: ${{ github.triggering_actor }}
         run: |
           TEAM_MEMBERSHIP=$(gh api "orgs/publishing-platform/teams/publishing-platform-ci-bots/memberships/$GITHUB_USER" -q .state || echo false)
+          TEAM_MEMBERSHIP=$(gh api "orgs/publishing-platform/teams/publishing-platform-production-admin/memberships/$GITHUB_USER" -q .state || echo false)
 
           echo "Team membership: $TEAM_MEMBERSHIP"
 
