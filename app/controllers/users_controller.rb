@@ -109,8 +109,12 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     authorize @user
 
-    @user.unlock_access!
-    redirect_back_or_to root_path, notice: "Unlocked #{@user.email}"
+    if @user.access_locked?
+      @user.unlock_access!
+      redirect_back_or_to root_path, notice: "Unlocked #{@user.email}"
+    else
+      redirect_back_or_to root_path, notice: "#{@user.email} is already unlocked"
+    end
   end
 
 private

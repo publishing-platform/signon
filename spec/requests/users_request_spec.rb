@@ -834,12 +834,6 @@ RSpec.describe "Users", type: :request do
         expect(two_factor_user.require_2fa?).to be true
       end
 
-      # it "redirects to root" do
-      #   delete cancel_email_change_user_path(another_user)
-
-      #   expect(response).to redirect_to(root_path)
-      # end
-
       it "redirects and displays success message" do
         two_factor_user = create(:two_factor_enabled_user)
 
@@ -865,6 +859,78 @@ RSpec.describe "Users", type: :request do
 
       it "sets not found status code if the user does not exist" do
         patch reset_2fa_user_path({ id: "non-existent-user-id" })
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
+
+  describe "PATCH unlock" do
+    context "when user is not authenticated" do
+      it "redirects user to sign in" do
+        patch unlock_user_path(user)
+
+        assert_not_authenticated
+      end
+    end
+
+    context "when user is a normal user" do
+      before do
+        sign_in user
+      end
+
+      after do
+        sign_out user
+      end
+
+      it "does not allow access" do
+        patch unlock_user_path(user)
+
+        assert_not_authorised
+      end
+    end
+
+    context "when user is an admin user" do
+      let(:user) { create(:admin_user) }
+
+      before do
+        sign_in user
+      end
+
+      after do
+        sign_out user
+      end
+
+      it "unlocks user" do
+        locked_user = create(:locked_user)
+
+        patch unlock_user_path(locked_user)
+
+        expect(locked_user.reload.access_locked?).to be false
+      end
+
+      it "redirects and displays success message" do
+        locked_user = create(:locked_user)
+
+        patch unlock_user_path(locked_user)
+
+        expect(response).to redirect_to(root_path)
+        follow_redirect!
+
+        expect(response.body).to include("Unlocked #{locked_user.email}")
+      end
+
+      it "redirects and displays appropriate message if user is already unlocked" do
+        patch unlock_user_path(user)
+
+        expect(response).to redirect_to(root_path)
+        follow_redirect!
+
+        expect(response.body).to include("#{user.email} is already unlocked")
+      end
+
+      it "sets not found status code if the user does not exist" do
+        patch unlock_user_path({ id: "non-existent-user-id" })
 
         expect(response).to have_http_status(:not_found)
       end
