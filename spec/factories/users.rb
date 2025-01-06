@@ -37,6 +37,11 @@ FactoryBot.define do
     confirmation_sent_at { Time.current }
   end
 
+  factory :two_factor_enabled_user, parent: :user do
+    require_2fa { true }
+    otp_secret { "Sssshh" }
+  end
+
   factory :api_user do
     transient do
       with_permissions { {} }

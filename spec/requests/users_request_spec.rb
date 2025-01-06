@@ -613,7 +613,7 @@ RSpec.describe "Users", type: :request do
     end
   end
 
-  describe "PUT resend_email_change_user_path" do
+  describe "PUT resend_email_change" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         put resend_email_change_user_path(user)
@@ -707,6 +707,164 @@ RSpec.describe "Users", type: :request do
 
       it "sets not found status code if the user does not exist" do
         put resend_email_change_user_path({ id: "non-existent-user-id" })
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
+
+  describe "DELETE cancel_email_change" do
+    context "when user is not authenticated" do
+      it "redirects user to sign in" do
+        delete cancel_email_change_user_path(user)
+
+        assert_not_authenticated
+      end
+    end
+
+    context "when user is authenticated" do
+      let(:user) { create(:user_with_pending_email_change) }
+
+      before do
+        sign_in user
+      end
+
+      after do
+        sign_out user
+      end
+
+      context "and is a normal user" do
+        context "and is resending for own account" do
+          it "clears unconfirmed_email & confirmation_token" do
+            delete cancel_email_change_user_path(user)
+
+            user.reload
+            expect(user.unconfirmed_email.blank?).to be true
+            expect(user.confirmation_token.blank?).to be true
+          end
+
+          it "redirects to root" do
+            delete cancel_email_change_user_path(user)
+
+            expect(response).to redirect_to(root_path)
+          end
+        end
+
+        context "and is cancelling for another user's account" do
+          it "does not allow access" do
+            another_user = create(:user_with_pending_email_change, email: "another@email.com")
+
+            delete cancel_email_change_user_path(another_user)
+
+            assert_not_authorised
+          end
+        end
+      end
+
+      context "and is an admin user" do
+        let(:user) { create(:admin_user) }
+        let(:another_user) { create(:user_with_pending_email_change) }
+
+        it "clears unconfirmed_email & confirmation_token for another user's account" do
+          delete cancel_email_change_user_path(another_user)
+
+          another_user.reload
+          expect(another_user.unconfirmed_email.blank?).to be true
+          expect(another_user.confirmation_token.blank?).to be true
+        end
+
+        it "redirects to root" do
+          delete cancel_email_change_user_path(another_user)
+
+          expect(response).to redirect_to(root_path)
+        end
+      end
+
+      it "sets not found status code if the user does not exist" do
+        delete cancel_email_change_user_path({ id: "non-existent-user-id" })
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
+
+  describe "PATCH reset_2fa" do
+    context "when user is not authenticated" do
+      it "redirects user to sign in" do
+        patch reset_2fa_user_path(user)
+
+        assert_not_authenticated
+      end
+    end
+
+    context "when user is a normal user" do
+      before do
+        sign_in user
+      end
+
+      after do
+        sign_out user
+      end
+
+      it "does not allow access" do
+        patch reset_2fa_user_path(user)
+
+        assert_not_authorised
+      end
+    end
+
+    context "when user is an admin user" do
+      let(:user) { create(:admin_user) }
+
+      before do
+        sign_in user
+      end
+
+      after do
+        sign_out user
+      end
+
+      it "resets 2FA for user" do
+        two_factor_user = create(:two_factor_enabled_user)
+
+        patch reset_2fa_user_path(two_factor_user)
+
+        two_factor_user.reload
+        expect(two_factor_user.otp_secret.blank?).to be true
+        expect(two_factor_user.require_2fa?).to be true
+      end
+
+      # it "redirects to root" do
+      #   delete cancel_email_change_user_path(another_user)
+
+      #   expect(response).to redirect_to(root_path)
+      # end
+
+      it "redirects and displays success message" do
+        two_factor_user = create(:two_factor_enabled_user)
+
+        patch reset_2fa_user_path(two_factor_user)
+
+        expect(response).to redirect_to(root_path)
+        follow_redirect!
+
+        expect(response.body).to include("Reset 2-Factor Authentication (2FA) for #{two_factor_user.email}")
+      end
+
+      it "sends email notifying user that their 2FA has been reset" do
+        two_factor_user = create(:two_factor_enabled_user)
+
+        perform_enqueued_jobs do
+          patch reset_2fa_user_path(two_factor_user)
+        end
+
+        email = last_email
+        expect(email.present?).to be true
+        expect(email.subject).to eql "2-Factor Authentication (2FA) has been reset"
+      end
+
+      it "sets not found status code if the user does not exist" do
+        patch reset_2fa_user_path({ id: "non-existent-user-id" })
 
         expect(response).to have_http_status(:not_found)
       end
