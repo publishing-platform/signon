@@ -33,4 +33,15 @@ RSpec.describe Permission, type: :model do
       create(:permission, oauth_application: nil)
     }.to raise_error(ActiveRecord::RecordInvalid)
   end
+
+  describe "scopes" do
+    describe "signin" do
+      it "returns all signin permissions" do
+        app1 = create(:oauth_application, with_permissions: %w[app1-permission])
+        app2 = create(:oauth_application, with_permissions: %w[app2-permission])
+
+        expect(described_class.signin).to contain_exactly(app1.signin_permission, app2.signin_permission)
+      end
+    end
+  end
 end
