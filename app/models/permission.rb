@@ -2,7 +2,7 @@ class Permission < ApplicationRecord
   SIGNIN_NAME = "signin".freeze
 
   # validation
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: { scope: :oauth_application_id }
   validate :signin_permission_name_not_changed
 
   # associations
