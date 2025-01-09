@@ -118,19 +118,20 @@ RSpec.describe "Permissions", type: :request do
         }.to change(Permission, :count).by(1)
       end
 
-      it "raises record not unique error when trying to create existing permission" do
-        application = create(:oauth_application)
-
-        expect {
-          post oauth_application_permissions_path(application), params: { permission: { name: "signin" } }
-        }.to raise_error(ActiveRecord::RecordNotUnique)
-      end
-
       it "displays error and does not create permission if name is not provided" do
         application = create(:oauth_application)
 
         post oauth_application_permissions_path(application), params: { permission: { name: "" } }
         expect(response.body).to include("Name can't be blank")
+
+        expect(application.reload.permissions).to contain_exactly(application.signin_permission)
+      end
+
+      it "displays error and does not create permission if permission already exists" do
+        application = create(:oauth_application)
+
+        post oauth_application_permissions_path(application), params: { permission: { name: "signin" } }
+        expect(response.body).to include("Name has already been taken")
 
         expect(application.reload.permissions).to contain_exactly(application.signin_permission)
       end
@@ -341,16 +342,6 @@ RSpec.describe "Permissions", type: :request do
         expect(permission.reload.name).to eql("admin")
       end
 
-      it "raises record not unique error when updating conflicts with an existing permission" do
-        application = create(:oauth_application)
-        create(:permission, oauth_application: application, name: "admin")
-        permission_write = create(:permission, oauth_application: application, name: "write")
-
-        expect {
-          patch oauth_application_permission_path(application, permission_write), params: { permission: { name: "admin" } }
-        }.to raise_error(ActiveRecord::RecordNotUnique)
-      end
-
       it "displays error and does not update permission if name is not provided" do
         application = create(:oauth_application)
         permission = create(:permission, oauth_application: application, name: "admin")
@@ -360,6 +351,17 @@ RSpec.describe "Permissions", type: :request do
         expect(response.body).to include("Name can't be blank")
 
         expect(permission.reload.name).to eql("admin")
+      end
+
+      it "displays error and does not update permission when updating conflicts with an existing permission" do
+        application = create(:oauth_application)
+        create(:permission, oauth_application: application, name: "admin")
+        permission_write = create(:permission, oauth_application: application, name: "write")
+
+        patch oauth_application_permission_path(application, permission_write), params: { permission: { name: "admin" } }
+        expect(response.body).to include("Name has already been taken")
+
+        expect(permission_write.reload.name).to eql "write"
       end
 
       it "prevents updating signin permission" do
