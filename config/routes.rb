@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   get "/healthcheck/live", to: proc { [200, {}, %w[OK]] }
-  
+
   use_doorkeeper do
     controllers authorizations: "signin_required_authorizations"
     skip_controllers :applications, :authorized_applications, :token_info
