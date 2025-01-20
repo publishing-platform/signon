@@ -13,8 +13,9 @@ module UserHelpers
     click_button "Sign in"
 
     if second_step && user && user.otp_secret
+      code = second_step == true ? ROTP::TOTP.new(user.otp_secret).now : second_step
       Timecop.freeze do
-        fill_in :code, with: ROTP::TOTP.new(user.otp_secret).now
+        fill_in :code, with: code
         click_button "Sign in"
       end
     end
