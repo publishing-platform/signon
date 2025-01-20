@@ -88,6 +88,95 @@ RSpec.describe "Sign in", type: :system do
       expect(page).to have_text("Use the app on your phone to get your 6-digit 2FA code")
       assert_selector "input[name=code]"
     end
+
+    it "prevents access with an old code" do
+      old_code = Timecop.freeze(2.minutes.ago) { ROTP::TOTP.new(user.otp_secret).now }
+
+      visit root_path
+      signin_with(email:, password:, second_step: old_code)
+
+      expect(page).to have_text("Use the app on your phone to get your 6-digit 2FA code")
+      assert_selector "input[name=code]"
+    end
+
+    it "prevents access with a garbage code" do
+      visit root_path
+      signin_with(email:, password:, second_step: "abcdef")
+
+      expect(page).to have_text("Use the app on your phone to get your 6-digit 2FA code")
+      assert_selector "input[name=code]"
+    end
+
+    it "does not remember a user's 2FA session if they've changed 2FA secret" do
+      visit root_path
+      signin_with(email:, password:)
+      assert_user_is_signed_in
+
+      signout
+      visit root_path
+
+      user.update!(otp_secret: ROTP::Base32.random_base32)
+      signin_with(email:, password:, second_step: false)
+
+      expect(page).to have_text("Use the app on your phone to get your 6-digit 2FA code")
+      assert_selector "input[name=code]"
+    end
+
+    it "forces user to set up 2FA again if 2FA is disabled for user with a remembered session" do
+      visit root_path
+      signin_with(email:, password:)
+      assert_user_is_signed_in
+
+      signout
+      visit root_path
+
+      user.update!(otp_secret: nil)
+      signin_with(email:, password:, second_step: false, set_up_2fa: false)
+
+      expect(page).to have_text("Make your account more secure by setting up 2‑Factor Authentication")
+    end
+
+    it "allows the user to cancel 2FA by signing out" do
+      visit root_path
+      signin_with(email:, password:, second_step: false)
+      click_link "Sign out"
+
+      expect(page).to have_text("Sign in to Publishing Platform")
+    end
+
+    it "does not allow access to restricted paths before completing 2FA" do
+      visit root_path
+      signin_with(email:, password:, second_step: false)
+      expect(page).to have_current_path(new_two_factor_authentication_session_path)
+
+      # TODO: This list should be complete
+      restricted_paths = [
+        oauth_authorization_path,
+        new_user_password_path,
+        edit_user_password_path,
+        new_user_confirmation_path,
+        user_confirmation_path,
+        accept_user_invitation_path,
+        remove_user_invitation_path,
+        new_user_invitation_path,
+        prompt_two_factor_authentication_path,
+        two_factor_authentication_path,
+        users_path,
+        oauth_applications_path,
+        api_users_path,
+      ]
+
+      restricted_paths.each do |path|
+        visit path
+        expect(page).to have_current_path(new_two_factor_authentication_session_path)
+      end
+    end
+  end
+
+  it "does not allow access to the 2FA login page before logging in" do
+    signout
+    visit new_two_factor_authentication_session_path
+    expect(page).to have_current_path("/users/sign_in")
   end
 
   def assert_user_is_signed_in
