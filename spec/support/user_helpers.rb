@@ -13,8 +13,9 @@ module UserHelpers
     click_button "Sign in"
 
     if second_step && user && user.otp_secret
+      code = second_step == true ? ROTP::TOTP.new(user.otp_secret).now : second_step
       Timecop.freeze do
-        fill_in :code, with: ROTP::TOTP.new(user.otp_secret).now
+        fill_in :code, with: code
         click_button "Sign in"
       end
     end
@@ -29,5 +30,17 @@ module UserHelpers
       fill_in "code", with: ROTP::TOTP.new(secret).now
       find('button[type="submit"]').click
     end
+  end
+
+  # usage: accept_invitation(password: "<new password>", invitation_token: "<token>")
+  def accept_invitation(options)
+    raise "Please provide password" unless options[:password]
+    raise "Please provide invitation token" unless options[:invitation_token]
+
+    signout
+    visit accept_user_invitation_path(invitation_token: options[:invitation_token])
+    fill_in "New password", with: options[:password]
+    fill_in "Confirm new password", with: options[:password]
+    click_button "Save password"
   end
 end

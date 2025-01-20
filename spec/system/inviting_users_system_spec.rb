@@ -32,15 +32,32 @@ RSpec.describe "Inviting users", type: :system do
     expect(page).to have_text("Your password was set successfully.")
   end
 
+  it "requires invited user to sign in after setting their password" do
+    user = User.invite!(name: "Joe Bloggs", email: "joe.bloggs@example.com")
+
+    accept_invitation(
+      invitation_token: user.raw_invitation_token,
+      password: "pretext annoying headpiece waviness header slinky",
+    )
+
+    expect(page).to have_text("Sign in to Publishing Platform")
+
+    fill_in "Email", with: "joe.bloggs@example.com"
+    fill_in "Password", with: "pretext annoying headpiece waviness header slinky"
+    click_button "Sign in"
+
+    expect(page).to have_text("Make your account more secure by setting up 2‑Factor Authentication")
+  end
+
   it "allows invitation to be resent" do
     signin_with(user)
     visit new_user_invitation_path
 
     fill_in "Name", with: "Joe Bloggs"
-    fill_in "Email", with: "fred@example.com"
+    fill_in "Email", with: "joe.bloggs@example.com"
     click_button "Create user and send email"
 
-    invited = User.find_by(email: "fred@example.com")
+    invited = User.find_by(email: "joe.bloggs@example.com")
     visit edit_user_path(invited)
 
     click_button "Resend signup email"
