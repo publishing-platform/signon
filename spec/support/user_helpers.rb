@@ -30,4 +30,16 @@ module UserHelpers
       find('button[type="submit"]').click
     end
   end
+
+  # usage: accept_invitation(password: "<new password>", invitation_token: "<token>")
+  def accept_invitation(options)
+    raise "Please provide password" unless options[:password]
+    raise "Please provide invitation token" unless options[:invitation_token]
+
+    signout
+    visit accept_user_invitation_path(invitation_token: options[:invitation_token])
+    fill_in "New password", with: options[:password]
+    fill_in "Confirm new password", with: options[:password]
+    click_button "Save password"
+  end
 end
