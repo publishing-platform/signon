@@ -2,6 +2,7 @@
 
 class Users::TwoFactorAuthenticationSessionController < ApplicationController
   before_action :authenticate_user!
+  before_action :ensure_user_has_2fa_setup
   skip_before_action :handle_two_factor_authentication
   skip_after_action :verify_authorized
 
@@ -27,5 +28,11 @@ class Users::TwoFactorAuthenticationSessionController < ApplicationController
       flash.now["alert"] = t("two_factor_authentication_session.attempt_failed")
       render(:new)
     end
+  end
+
+private
+
+  def ensure_user_has_2fa_setup
+    redirect_to root_path unless current_user.has_2fa?
   end
 end
