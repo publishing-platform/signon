@@ -28,7 +28,6 @@ module UserHelpers
   def enter_2fa_code(secret)
     Timecop.freeze do
       fill_in "code", with: ROTP::TOTP.new(secret).now
-      find('button[type="submit"]').click
     end
   end
 
