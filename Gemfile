@@ -29,6 +29,7 @@ group :development, :test do
   gem "publishing_platform_test"
   gem "rspec-rails"
   gem "timecop"
+  gem "webmock"
 end
 
 group :development do

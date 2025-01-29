@@ -10,9 +10,10 @@ class Users::SessionsController < Devise::SessionsController
   # end
 
   # POST /resource/sign_in
-  # def create
-  #   super
-  # end
+  def create
+    store_location_for("2fa", session[stored_location_key_for(:user)])
+    super
+  end
 
   # DELETE /resource/sign_out
   # def destroy

@@ -33,7 +33,7 @@ RSpec.describe "Two Factor Authentication prompt", type: :system do
       click_button "Finish set up"
 
       expect(page).to have_text("2-Factor Authentication set up")
-      expect(page).to have_current_path(root_path)
+      expect(page).to have_current_path(users_path)
     end
 
     it "displays failure message if incorrect code entered" do

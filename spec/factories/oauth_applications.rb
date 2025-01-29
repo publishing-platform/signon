@@ -5,8 +5,8 @@ FactoryBot.define do
     end
 
     sequence(:name) { |n| "Application #{n}" }
-    redirect_uri { "https://app.com/callback" }
-    home_uri { "https://app.com/" }
+    redirect_uri { "https://app.test.publishing-platform.co.uk/callback" }
+    home_uri { "https://app.test.publishing-platform.co.uk" }
     description { "Important information about this app" }
 
     after(:create) do |app, evaluator|

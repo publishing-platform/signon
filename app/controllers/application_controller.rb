@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
 private
 
   def redirect_to_prior_flow(args = {})
-    redirect_to stored_location_for(:user) || :root, args
+    redirect_to stored_location_for("2fa") || :root, args
   end
 
   def user_not_authorized(_exception)
