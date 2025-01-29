@@ -25,6 +25,11 @@ RSpec.describe "Doorkeeper", type: :request do
     sign_in(user)
   end
 
+  it "prevents access to Doorkeeper's /oauth/applications page" do
+    get "/oauth/applications"
+    expect(response).to have_http_status(:not_found)
+  end
+
   it "implements oauth2 authorization code grant type" do
     user.grant_application_signin_permission(application)
 
@@ -51,7 +56,7 @@ private
 
   def request_authorization_code(app, code_challenge_method: nil, code_challenge: nil)
     get oauth_authorization_path, params: { response_type: "code", client_id: app.uid, redirect_uri: app.redirect_uri, code_challenge_method:, code_challenge: }
-    assert_response :redirect
+    expect(response).to have_http_status(:redirect)
     Rack::Utils.parse_query(URI.parse(response.location).query)["code"]
   end
 
@@ -59,13 +64,13 @@ private
     http_basic_auth = ActionController::HttpAuthentication::Basic.encode_credentials(app.uid, app.secret)
     post oauth_token_path, params: { grant_type: "authorization_code", code: auth_code, redirect_uri: app.redirect_uri, code_verifier: },
                            headers: { Authorization: http_basic_auth }
-    assert_response :success
+    expect(response).to have_http_status(:ok)
     JSON.parse(response.body)["access_token"]
   end
 
   def request_user_data(app, access_token)
     get "/user.json", params: { client_id: app.uid }, headers: { Authorization: "Bearer #{access_token}" }
-    assert_response :success
+    expect(response).to have_http_status(:ok)
     JSON.parse(response.body)
   end
 end
