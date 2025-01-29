@@ -1,10 +1,10 @@
 require "rails_helper"
 
-RSpec.describe "API User applications", type: :request do
+RSpec.describe "/api_users/:api_user_id/applications", type: :request do
   let(:user) { create(:user) }
   let(:api_user) { create(:api_user) }
 
-  describe "GET index" do
+  describe "GET /index" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         get api_user_applications_path(api_user)

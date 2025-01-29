@@ -1,10 +1,10 @@
 require "rails_helper"
 
-RSpec.describe "User permissions", type: :request do
+RSpec.describe "/users/:user_id/applications/:application_id/permissions", type: :request do
   let(:user) { create(:user) }
   let(:application) { create(:oauth_application) }
 
-  describe "GET edit" do
+  describe "GET /edit" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         get edit_user_application_permissions_path(user, application)
@@ -62,7 +62,7 @@ RSpec.describe "User permissions", type: :request do
     end
   end
 
-  describe "PUT update" do
+  describe "PUT /update" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         put user_application_permissions_path(user, application)

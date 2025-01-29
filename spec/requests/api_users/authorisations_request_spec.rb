@@ -1,12 +1,12 @@
 require "rails_helper"
 
-RSpec.describe "API User authorisations", type: :request do
+RSpec.describe "/api_users/:api_user_id/authorisations", type: :request do
   let(:user) { create(:user) }
   let(:api_user) { create(:api_user) }
   let(:application) { create(:oauth_application) }
   let(:access_token) { create(:oauth_access_token, resource_owner_id: api_user.id) }
 
-  describe "GET new" do
+  describe "GET /new" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         get new_api_user_authorisation_path(api_user)
@@ -62,7 +62,7 @@ RSpec.describe "API User authorisations", type: :request do
     end
   end
 
-  describe "POST create" do
+  describe "POST /create" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         post api_user_authorisations_path(api_user)
@@ -138,7 +138,7 @@ RSpec.describe "API User authorisations", type: :request do
     end
   end
 
-  describe "GET edit" do
+  describe "GET /edit" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         get edit_api_user_authorisation_path(api_user, access_token)
@@ -200,7 +200,7 @@ RSpec.describe "API User authorisations", type: :request do
     end
   end
 
-  describe "POST revoke" do
+  describe "POST /revoke" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         post revoke_api_user_authorisation_path(api_user, access_token)

@@ -1,10 +1,10 @@
 require "rails_helper"
 
-RSpec.describe "User applications", type: :request do
+RSpec.describe "/users/:user_id/applications", type: :request do
   let(:user) { create(:user) }
   let(:application) { create(:oauth_application) }
 
-  describe "GET index" do
+  describe "GET /index" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         get user_applications_path(user)
@@ -48,7 +48,7 @@ RSpec.describe "User applications", type: :request do
     end
   end
 
-  describe "GET show" do
+  describe "GET /show" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         get user_application_path(user, application)

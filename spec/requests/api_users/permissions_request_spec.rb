@@ -1,9 +1,9 @@
 require "rails_helper"
 
-RSpec.describe "API User permissions", type: :request do
+RSpec.describe "/api_users/:api_user_id/applications/:application_id/permissions", type: :request do
   let(:user) { create(:user) }
 
-  describe "GET edit" do
+  describe "GET /edit" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         application = create(:oauth_application)
@@ -88,7 +88,7 @@ RSpec.describe "API User permissions", type: :request do
     end
   end
 
-  describe "PATCH edit" do
+  describe "PATCH /update" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         application = create(:oauth_application)

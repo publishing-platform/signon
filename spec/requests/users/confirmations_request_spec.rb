@@ -1,10 +1,10 @@
 require "rails_helper"
 
-RSpec.describe "User confirmations", type: :request do
+RSpec.describe "/users/confirmation", type: :request do
   # let(:user) { create(:user) }
   # let!(:organisation) { create(:organisation) }
 
-  describe "GET new" do
+  describe "GET /new" do
     it "is disabled" do
       get new_user_confirmation_path
 
@@ -15,7 +15,7 @@ RSpec.describe "User confirmations", type: :request do
     end
   end
 
-  describe "POST create" do
+  describe "POST /create" do
     it "is disabled" do
       post user_confirmation_path
 

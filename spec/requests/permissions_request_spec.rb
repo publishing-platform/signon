@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "/oauth_applications/:oauth_application_id/permissions", type: :request do
   let(:user) { create(:user) }
 
-  describe "GET new" do
+  describe "GET /new" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         application = create(:oauth_application)
@@ -60,7 +60,7 @@ RSpec.describe "/oauth_applications/:oauth_application_id/permissions", type: :r
     end
   end
 
-  describe "POST create" do
+  describe "POST /create" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         application = create(:oauth_application)
@@ -144,7 +144,7 @@ RSpec.describe "/oauth_applications/:oauth_application_id/permissions", type: :r
     end
   end
 
-  describe "GET index" do
+  describe "GET /index" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         application = create(:oauth_application)
@@ -211,7 +211,7 @@ RSpec.describe "/oauth_applications/:oauth_application_id/permissions", type: :r
     end
   end
 
-  describe "GET edit" do
+  describe "GET /edit" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         application = create(:oauth_application)
@@ -280,7 +280,7 @@ RSpec.describe "/oauth_applications/:oauth_application_id/permissions", type: :r
     end
   end
 
-  describe "PATCH update" do
+  describe "PATCH /update" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         application = create(:oauth_application)

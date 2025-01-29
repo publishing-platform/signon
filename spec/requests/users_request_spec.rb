@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "/users", type: :request do
   let(:user) { create(:user) }
 
-  describe "GET index" do
+  describe "GET /index" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         get users_path
@@ -142,7 +142,7 @@ RSpec.describe "/users", type: :request do
     end
   end
 
-  describe "GET edit" do
+  describe "GET /edit" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         another_user = create(:user)
@@ -258,7 +258,7 @@ RSpec.describe "/users", type: :request do
     end
   end
 
-  describe "PATCH update" do
+  describe "PATCH /update" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         another_user = create(:user)
@@ -365,7 +365,7 @@ RSpec.describe "/users", type: :request do
     end
   end
 
-  describe "GET edit_email_or_password" do
+  describe "GET /edit_email_or_password" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         get edit_email_or_password_user_path(user)
@@ -438,7 +438,7 @@ RSpec.describe "/users", type: :request do
     end
   end
 
-  describe "PATCH update_email" do
+  describe "PATCH /update_email" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         patch update_email_user_path(user)
@@ -527,7 +527,7 @@ RSpec.describe "/users", type: :request do
     end
   end
 
-  describe "PATCH update_password" do
+  describe "PATCH /update_password" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         patch update_password_user_path(user)
@@ -613,7 +613,7 @@ RSpec.describe "/users", type: :request do
     end
   end
 
-  describe "PUT resend_email_change" do
+  describe "PUT /resend_email_change" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         put resend_email_change_user_path(user)
@@ -713,7 +713,7 @@ RSpec.describe "/users", type: :request do
     end
   end
 
-  describe "DELETE cancel_email_change" do
+  describe "DELETE /cancel_email_change" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         delete cancel_email_change_user_path(user)
@@ -788,7 +788,7 @@ RSpec.describe "/users", type: :request do
     end
   end
 
-  describe "PATCH reset_2fa" do
+  describe "PATCH /reset_2fa" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         patch reset_2fa_user_path(user)
@@ -865,7 +865,7 @@ RSpec.describe "/users", type: :request do
     end
   end
 
-  describe "PATCH unlock" do
+  describe "PATCH /unlock" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         patch unlock_user_path(user)

@@ -4,7 +4,7 @@ RSpec.describe "/oauth/authorize", type: :request do
   let(:application) { create(:oauth_application) }
   let(:user) { create(:user) }
 
-  describe "GET new" do
+  describe "GET /new" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         application = create(:oauth_application)
@@ -100,7 +100,7 @@ RSpec.describe "/oauth/authorize", type: :request do
     end
   end
 
-  describe "POST create" do
+  describe "POST /create" do
     before do
       sign_in(user)
     end
@@ -111,7 +111,7 @@ RSpec.describe "/oauth/authorize", type: :request do
     end
   end
 
-  describe "DELETE destroy" do
+  describe "DELETE /destroy" do
     before do
       sign_in(user)
     end

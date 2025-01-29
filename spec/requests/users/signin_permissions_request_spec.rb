@@ -4,7 +4,7 @@ RSpec.describe "/users/:user_id/applications/:application_id/signin_permission",
   let(:user) { create(:user) }
   let(:application) { create(:oauth_application) }
 
-  describe "POST create" do
+  describe "POST /create" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         post user_application_signin_permission_path(user, application)
@@ -62,7 +62,7 @@ RSpec.describe "/users/:user_id/applications/:application_id/signin_permission",
     end
   end
 
-  describe "GET delete" do
+  describe "GET /delete" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         get delete_user_application_signin_permission_path(user, application)
@@ -127,7 +127,7 @@ RSpec.describe "/users/:user_id/applications/:application_id/signin_permission",
     end
   end
 
-  describe "DELETE destroy" do
+  describe "DELETE /destroy" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         delete user_application_signin_permission_path(user, application)

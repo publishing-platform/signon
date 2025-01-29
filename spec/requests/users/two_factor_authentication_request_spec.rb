@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "/users/two_factor_authentication", type: :request do
   let(:user) { create(:user) }
 
-  describe "GET prompt" do
+  describe "GET /prompt" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         get prompt_two_factor_authentication_path
@@ -13,7 +13,7 @@ RSpec.describe "/users/two_factor_authentication", type: :request do
     end
   end
 
-  describe "GET show" do
+  describe "GET /show" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         get two_factor_authentication_path
@@ -23,7 +23,7 @@ RSpec.describe "/users/two_factor_authentication", type: :request do
     end
   end
 
-  describe "PUT update" do
+  describe "PUT /update" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         put two_factor_authentication_path

@@ -1,9 +1,9 @@
 require "rails_helper"
 
-RSpec.describe "User invitations", type: :request do
+RSpec.describe "/users/invitation", type: :request do
   let(:user) { create(:user) }
 
-  describe "GET new" do
+  describe "GET /new" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         get new_user_invitation_path
@@ -47,7 +47,7 @@ RSpec.describe "User invitations", type: :request do
     end
   end
 
-  describe "POST create" do
+  describe "POST /create" do
     context "when user is not authenticated" do
       it "redirects user to sign in" do
         post user_invitation_path
@@ -125,7 +125,7 @@ RSpec.describe "User invitations", type: :request do
     end
   end
 
-  describe "PUT resend" do
+  describe "PUT /resend" do
     let(:invited) { create(:invited_user) }
 
     context "when user is not authenticated" do
