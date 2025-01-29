@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "User two factor authentication", type: :request do
+RSpec.describe "/users/two_factor_authentication", type: :request do
   let(:user) { create(:user) }
 
   describe "GET prompt" do

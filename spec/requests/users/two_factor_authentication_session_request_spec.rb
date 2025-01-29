@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "User two factor authentication session", type: :request do
+RSpec.describe "/users/two_factor_authentication/session", type: :request do
   let(:user) { create(:user) }
 
   describe "GET new" do

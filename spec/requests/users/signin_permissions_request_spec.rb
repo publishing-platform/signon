@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "User signin permissions", type: :request do
+RSpec.describe "/users/:user_id/applications/:application_id/signin_permission", type: :request do
   let(:user) { create(:user) }
   let(:application) { create(:oauth_application) }
 

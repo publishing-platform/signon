@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Permissions", type: :request do
+RSpec.describe "/oauth_applications/:oauth_application_id/permissions", type: :request do
   let(:user) { create(:user) }
 
   describe "GET new" do
