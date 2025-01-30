@@ -74,6 +74,17 @@ RSpec.describe "/user", type: :request do
       expect(response).to have_http_status(:unauthorized)
     end
 
+    it "does not succeed with an expired token" do
+      user.grant_application_signin_permission(application)
+
+      access_token = create(:oauth_access_token, application:, resource_owner_id: user.id)
+      access_token.update_columns(created_at: 3.days.ago, expires_in: 30)
+
+      get "/user.json", params: { client_id: application.uid }, headers: { Authorization: "Bearer #{access_token.token}" }
+
+      expect(response).to have_http_status(:unauthorized)
+    end
+
     it "does not succeed if user does not have 'signin' permission for the relevant app" do
       access_token = create(:oauth_access_token, application:, resource_owner_id: user.id)
       get "/user.json", params: { client_id: application.uid }, headers: { Authorization: "Bearer #{access_token.token}" }
