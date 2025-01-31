@@ -69,6 +69,17 @@ FactoryBot.define do
   end
 end
 
+def api_user_with_token(name, token_count: 2)
+  FactoryBot.create(:api_user, name:) do |api_user|
+    token_count.times do
+      app = FactoryBot.create(:oauth_application)
+      FactoryBot.create(
+        :oauth_access_token, resource_owner_id: api_user.id, application_id: app.id
+      )
+    end
+  end
+end
+
 def find_application(app_or_name)
   if app_or_name.is_a?(String)
     OauthApplication.where(name: app_or_name).first!
