@@ -62,6 +62,11 @@ Rails.application.configure do
   # Use a real queuing backend for Active Job (and separate queues per environment).
   # config.active_job.queue_adapter = :resque
   # config.active_job.queue_name_prefix = "signon_production"
+  config.action_mailer.smtp_settings = { 
+    address: ENV["SMTP_ENDPOINT"], 
+    user_name: ENV["SMTP_USERNAME"],  
+    password: ENV["SMTP_PASSWORD"]
+  }  
   config.action_mailer.default_url_options = { host: URI(PublishingPlatformLocation.external_url_for("signon")).host }
   config.action_mailer.perform_caching = false
 
