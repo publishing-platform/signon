@@ -64,6 +64,7 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "signon_production"
   config.action_mailer.smtp_settings = {
     address: ENV["SMTP_ENDPOINT"],
+    port: ENV["SMTP_PORT"],
     user_name: ENV["SMTP_USERNAME"],
     password: ENV["SMTP_PASSWORD"],
   }
