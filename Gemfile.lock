@@ -177,6 +177,7 @@ GEM
       recursive-open-struct (~> 1.1, >= 1.1.1)
       rest-client (~> 2.0)
     language_server-protocol (3.17.0.3)
+    link_header (0.0.8)
     llhttp-ffi (0.5.0)
       ffi-compiler (~> 1.0)
       rake (~> 13.0)
@@ -214,6 +215,7 @@ GEM
     nio4r (2.7.4)
     nokogiri (1.16.7-x86_64-linux)
       racc (~> 1.4)
+    null_logger (0.0.1)
     orm_adapter (0.5.0)
     ostruct (0.6.1)
     parallel (1.24.0)
@@ -224,6 +226,12 @@ GEM
     psych (5.1.2)
       stringio
     public_suffix (6.0.1)
+    publishing_platform_api_adapters (0.7.1)
+      addressable
+      link_header
+      null_logger
+      publishing_platform_location
+      rest-client (~> 2.0)
     publishing_platform_app_config (0.3.0)
       puma (>= 5.6, < 7.0)
       sentry-rails (~> 5.3)
@@ -436,6 +444,7 @@ DEPENDENCIES
   kaminari (~> 1.2)
   kubeclient
   pg (~> 1.5)
+  publishing_platform_api_adapters
   publishing_platform_app_config
   publishing_platform_location
   publishing_platform_rubocop
