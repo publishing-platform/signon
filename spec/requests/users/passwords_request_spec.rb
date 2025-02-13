@@ -4,6 +4,21 @@ RSpec.describe "/users/password", type: :request do
   let!(:user) { create(:user) }
   let!(:reset_password_token) { user.send_reset_password_instructions }
 
+  describe "POST /create" do
+    it "returns a 429 response if too many requests are made" do
+      Rack::Attack.enabled = true
+      Rack::Attack.cache.store = ActiveSupport::Cache::MemoryStore.new
+
+      25.times do
+        post user_password_path, params: { user: { email: "fake-email@test.com" } }
+      end
+
+      expect(response.body).to include("Too many requests.")
+
+      Rack::Attack.enabled = false
+    end
+  end
+
   describe "GET /edit" do
     it "shows password reset form" do
       get edit_user_password_path, params: { reset_password_token: }
