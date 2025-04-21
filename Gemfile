@@ -4,6 +4,7 @@ source "https://rubygems.org"
 gem "rails", "7.2.2"
 
 gem "bootsnap", require: false
+gem "dartsass-rails"
 gem "devise", "~> 4.9"
 gem "devise_invitable", "~> 2.0.0"
 gem "doorkeeper"
@@ -19,7 +20,6 @@ gem "pundit", "~> 2.4"
 gem "rack-attack"
 gem "rotp"
 gem "rqrcode"
-gem "sassc-rails"
 gem "sprockets-rails"
 gem "terser"
 gem "tzinfo-data", platforms: %i[mswin mswin64 mingw x64_mingw jruby]
