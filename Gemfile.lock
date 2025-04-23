@@ -121,7 +121,7 @@ GEM
     diff-lcs (1.5.1)
     docile (1.4.1)
     domain_name (0.6.20240107)
-    doorkeeper (5.8.0)
+    doorkeeper (5.8.2)
       railties (>= 5)
     drb (2.2.1)
     erubi (1.13.1)
