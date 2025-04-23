@@ -6,7 +6,7 @@ gem "rails", "8.0.2"
 gem "bootsnap", require: false
 gem "dartsass-rails"
 gem "devise", "~> 4.9"
-gem "devise_invitable", "~> 2.0.0"
+gem "devise_invitable", "~> 2.0.10"
 gem "doorkeeper"
 gem "jbuilder"
 gem "jsbundling-rails"
