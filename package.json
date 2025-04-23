@@ -14,9 +14,9 @@
     }
   },
   "dependencies": {
-    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-node-resolve": "^16.0.1",
     "bootstrap": "^5.3.3",
-    "rollup": "^4.17.2"
+    "rollup": "^4.40.0"
   },
   "devDependencies": {
     "standardx": "^7.0.0",
