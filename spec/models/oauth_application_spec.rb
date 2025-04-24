@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe OauthApplication, type: :model do
   it "has a signin permission on create" do
-    expect(create(:oauth_application).signin_permission).not_to be nil
+    expect(create(:oauth_application).signin_permission).not_to be_nil
   end
 
   describe "#sorted_permissions" do

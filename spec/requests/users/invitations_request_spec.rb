@@ -106,7 +106,7 @@ RSpec.describe "/users/invitation", type: :request do
         it "does not create user" do
           expect {
             post user_invitation_path, params: { user: { name: "Test" } }
-          }.to change(User, :count).by(0)
+          }.not_to change(User, :count)
         end
       end
 
@@ -119,7 +119,7 @@ RSpec.describe "/users/invitation", type: :request do
         it "does not create user" do
           expect {
             post user_invitation_path, params: { user: { email: "test@test.co.uk" } }
-          }.to change(User, :count).by(0)
+          }.not_to change(User, :count)
         end
       end
     end
