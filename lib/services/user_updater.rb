@@ -11,7 +11,7 @@ module Services
       @user.skip_reconfirmation!
       return unless update_user
 
-      if @user.previous_changes[:email] && (@user.web_user? && @user.invited_but_not_yet_accepted?)
+      if @user.previous_changes[:email] && @user.web_user? && @user.invited_but_not_yet_accepted?
         @user.invite!
       end
 

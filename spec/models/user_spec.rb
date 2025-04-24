@@ -62,7 +62,7 @@ RSpec.describe User, type: :model do
 
     it "blanks otp_secret" do
       user.reset_2fa!
-      expect(user.otp_secret).to be nil
+      expect(user.otp_secret).to be_nil
     end
 
     it "sets require_2fa to true" do
@@ -73,7 +73,7 @@ RSpec.describe User, type: :model do
 
   describe "#manageable_roles" do
     it "returns roles that the user is allowed to manage" do
-      expect(user.manageable_roles).to match_array([])
+      expect(user.manageable_roles).to be_empty
       expect(admin_user.manageable_roles).to match_array(%w[normal admin])
     end
   end

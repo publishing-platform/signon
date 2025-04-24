@@ -44,7 +44,7 @@ RSpec.describe Suspension, type: :model do
     user.reload
 
     expect(user.suspended?).to be false
-    expect(user.reason_for_suspension).to be nil
+    expect(user.reason_for_suspension).to be_nil
   end
 
   it "is suspended when suspend is true" do
