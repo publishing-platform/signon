@@ -82,6 +82,8 @@ GEM
     bindex (0.8.1)
     bootsnap (1.18.4)
       msgpack (~> 1.2)
+    brakeman (7.0.2)
+      racc
     builder (3.3.0)
     capybara (3.40.0)
       addressable
@@ -238,7 +240,7 @@ GEM
     psych (5.2.4)
       date
       stringio
-    public_suffix (6.0.1)
+    public_suffix (6.0.2)
     publishing_platform_api_adapters (0.10.0)
       addressable
       link_header
@@ -257,11 +259,12 @@ GEM
       rubocop-rails (= 2.31.0)
       rubocop-rake (= 0.7.1)
       rubocop-rspec (= 3.6.0)
-    publishing_platform_test (0.1.0)
+    publishing_platform_test (0.1.1)
+      brakeman (>= 5.0.2)
       capybara (>= 3.36)
       puma
       selenium-webdriver (>= 4.0)
-    puma (6.4.3)
+    puma (6.6.0)
       nio4r (~> 2.0)
     pundit (2.5.0)
       activesupport (>= 3.0.0)
@@ -375,11 +378,11 @@ GEM
       lint_roller (~> 1.1)
       rubocop (~> 1.72, >= 1.72.1)
     ruby-progressbar (1.13.0)
-    rubyzip (2.3.2)
+    rubyzip (2.4.1)
     sass-embedded (1.86.3-x86_64-linux-gnu)
       google-protobuf (~> 4.30)
     securerandom (0.4.1)
-    selenium-webdriver (4.26.0)
+    selenium-webdriver (4.32.0)
       base64 (~> 0.2)
       logger (~> 1.4)
       rexml (~> 3.2, >= 3.2.5)
