@@ -1,5 +1,5 @@
 module UserHelpers
-  def signin_with(user = nil, email: nil, password: nil, second_step: true, set_up_2fa: true)
+  def signin_with(user = nil, email: nil, password: nil, set_up_2fa: true)
     user ||= User.find_by(email:)
     email ||= user.email
     password ||= user.password
@@ -11,9 +11,13 @@ module UserHelpers
     fill_in "Email", with: email
     fill_in "Password", with: password
     click_button "Sign in"
+  end
 
-    if second_step && user && user.otp_secret
-      code = second_step == true ? ROTP::TOTP.new(user.otp_secret).now : second_step
+  def complete_2fa_step(user = nil, email: nil)
+    user ||= User.find_by(email:)
+
+    if user && user.otp_secret
+      code = ROTP::TOTP.new(user.otp_secret).now
       Timecop.freeze do
         fill_in :code, with: code
         click_button "Sign in"
