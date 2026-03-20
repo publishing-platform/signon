@@ -43,16 +43,6 @@ jobs:
     name: Test Ruby
     runs-on: ubuntu-latest
     steps:
-      - name: Remove image-bundled Chrome
-        run: sudo apt-get purge google-chrome-stable
-
-      - name: Setup Chrome
-        uses: browser-actions/setup-chrome@v1
-        with:
-          chrome-version: 128
-          install-chromedriver: true
-          install-dependencies: true
-              
       - name: Setup Postgres
         id: setup-postgres
         uses: publishing-platform/publishing-platform-infrastructure/.github/actions/setup-postgres@main
