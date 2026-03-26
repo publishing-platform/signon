@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Invite users", type: :feature do
+RSpec.describe "Invite user", type: :feature do
   context "when sending an invitation" do
     let(:user) { create(:admin_user) }
 
