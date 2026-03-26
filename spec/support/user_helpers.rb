@@ -13,11 +13,11 @@ module UserHelpers
     click_button "Sign in"
   end
 
-  def complete_2fa_step(user = nil, email: nil)
+  def complete_2fa_step(user = nil, email: nil, code: nil)
     user ||= User.find_by(email:)
 
     if user && user.otp_secret
-      code = ROTP::TOTP.new(user.otp_secret).now
+      code = code.nil? ? ROTP::TOTP.new(user.otp_secret).now : code
       Timecop.freeze do
         fill_in :code, with: code
         click_button "Sign in"

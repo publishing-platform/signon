@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Creating password", type: :feature do
+RSpec.describe "Create password", type: :feature do
   let(:user) { User.invite!(name: "Joe Bloggs", email: "joe.bloggs@example.com") }
   let(:password) { "0871feaffef29223358cbf086b4084c4" }
 
