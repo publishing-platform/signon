@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Two Factor Authentication prompt", type: :feature do
+RSpec.feature "Two Factor Authentication prompt", type: :feature do
   let(:user) { create(:admin_user) }
 
   scenario "setting up 2FA with a correct code" do

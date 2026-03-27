@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Sign in", type: :feature do
+RSpec.feature "Sign in", type: :feature do
   let(:organisation) { create(:organisation, name: "Ministry of Lindy-hop", slug: "ministry-of-lindy-hop") }
   let(:email) { "email@example.com" }
   let(:password) { "some password with various $ymb0l$" }

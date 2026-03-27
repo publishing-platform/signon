@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Suspend user", type: :feature do
+RSpec.feature "Suspend user", type: :feature do
   let(:admin_user) { create(:admin_user) }
   let(:user) { create(:user) }
 

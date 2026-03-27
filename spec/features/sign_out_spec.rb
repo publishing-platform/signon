@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Sign out", type: :feature do
+RSpec.feature "Sign out", type: :feature do
   scenario "signing out when not already signed in" do
     when_i_sign_out
     then_i_see_the_signin_page

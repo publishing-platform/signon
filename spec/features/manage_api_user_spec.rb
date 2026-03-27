@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Manage API user", type: :feature do
+RSpec.feature "Manage API user", type: :feature do
   let(:user) { create(:admin_user) }
   let!(:application) { create(:oauth_application, name: "app-name", with_permissions: ["Managing Editor"]) }
   let(:api_user) { create(:api_user) }

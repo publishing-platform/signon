@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Authorise application", type: :feature do
+RSpec.feature "Authorise application", type: :feature do
   let(:application) { create(:oauth_application) }
   let(:user) { create(:user) }
   let(:auth_url) { "/oauth/authorize?response_type=code&client_id=#{application.uid}&redirect_uri=#{application.redirect_uri}" }

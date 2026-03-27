@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Lock user", type: :feature do
+RSpec.feature "Lock user", type: :feature do
   let(:user) { create(:user) }
 
   scenario "entering incorrect password too many times" do

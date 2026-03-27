@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Two Factor Authentication", type: :feature do
+RSpec.feature "Two Factor Authentication", type: :feature do
   let!(:new_secret) { ROTP::Base32.random_base32 }
   let!(:original_secret) { ROTP::Base32.random_base32 }
   let(:user) { create(:user, email: "jane.user@example.com") }

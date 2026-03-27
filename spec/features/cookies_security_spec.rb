@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Cookies security", type: :feature do
+RSpec.feature "Cookies security", type: :feature do
   let(:user) { create(:two_factor_enabled_user) }
 
   scenario "set the right cookies when signing in" do
