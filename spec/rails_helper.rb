@@ -26,7 +26,9 @@ Capybara.register_driver :headless_chrome do |app|
   )
 end
 
-Capybara.default_driver = Capybara.javascript_driver # assigned in publishing_platform_test to :headless_chrome
+# use javascript driver for all feature tests (default is rack_test)
+# javascript driver is assigned in publishing_platform_test to :headless_chrome
+Capybara.default_driver = Capybara.javascript_driver
 
 WebMock.disable_net_connect!(allow_localhost: true)
 
