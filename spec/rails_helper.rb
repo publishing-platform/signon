@@ -26,6 +26,10 @@ Capybara.register_driver :headless_chrome do |app|
   )
 end
 
+# use javascript driver for all feature tests (default is rack_test)
+# javascript driver is assigned in publishing_platform_test to :headless_chrome
+Capybara.default_driver = Capybara.javascript_driver
+
 WebMock.disable_net_connect!(allow_localhost: true)
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -86,11 +90,7 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 
-  config.include UserHelpers, type: :system
+  config.include UserHelpers, type: :feature
   config.include RequestSpecHelpers, type: :request
   config.include EmailHelpers
-
-  config.before(:each, type: :system) do
-    driven_by :headless_chrome
-  end
 end
