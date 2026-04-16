@@ -1,89 +1,34 @@
-<html>
-  <head>
-    <title><%= yield(:title) %> - Publishing Platform Signon</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<%= render "publishing_platform_publishing_components/components/layout", {
+  title: "#{yield(:title)} - Publishing Platform Signon",
+  logo_text: "Signon",
+  navigation_items:
+} do %>
 
-    <%= stylesheet_link_tag "application" %>    
-  </head>  
-  <body>  
-    
-    <div class="container py-3">
-      <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-        <div class="col-md-3 mb-2 mb-md-0">
-          <a href="/" class="d-flex align-items-center link-body-emphasis text-decoration-none">
-            <span class="fs-4">Signon</span>
-          </a>
-        </div>
-        <%= render "components/navigation", { navigation_items: }%>
-      </header>
-    
-      <main>
-        <% if yield(:back_link).present? %>
-          <a href="<%= yield(:back_link) %>" class="d-inline-block mb-3">&lt; Back</a>
-        <% elsif yield(:breadcrumbs).present? %>
-          <%= yield(:breadcrumbs) %>
-        <% end %>    
-        <% if flash["notice"].present? %>
-          <p class="alert alert-primary"><%= notice %></p>
-        <% end %>
-        <% if flash["alert"].present? %>
-          <p class="alert alert-danger"><%= alert %></p>
-        <% end %>  
+  <% if yield(:back_link).present? %>
+    <a href="<%= yield(:back_link) %>" class="d-inline-block mb-3">&lt; Back</a>
+  <% elsif yield(:breadcrumbs).present? %>
+    <%= yield(:breadcrumbs) %>
+  <% end %>    
+  <% if flash["notice"].present? %>
+    <p class="alert alert-primary"><%= notice %></p>
+  <% end %>
+  <% if flash["alert"].present? %>
+    <p class="alert alert-danger"><%= alert %></p>
+  <% end %>  
 
-        <div class="row">
-          <div class="col-xs-12 <%= yield(:top_right).present? ? 'col-md-6' : 'col-md-8' %>">
-            <div class="pb-md-4">
-              <%= yield(:context) %>
-              <h1><%= yield(:title) %></h1>
-              <!-- <p class="fs-5 text-body-secondary">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It’s built with default Bootstrap components and utilities with little customization.</p> -->
-            </div>               
-          </div>
-          <% if yield(:top_right).present? %>
-            <div class="col-xs-12 col-md-6">
-              <%= yield(:top_right) %>
-            </div>
-          <% end %>             
-        </div>
+  <div class="row">
+    <div class="col-xs-12 <%= yield(:top_right).present? ? 'col-md-6' : 'col-md-8' %>">
+      <div class="pb-md-4">
+        <%= yield(:context) %>
+        <h1><%= yield(:title) %></h1>
+      </div>               
+    </div>
+    <% if yield(:top_right).present? %>
+      <div class="col-xs-12 col-md-6">
+        <%= yield(:top_right) %>
+      </div>
+    <% end %>             
+  </div>
 
-        <%= yield %>        
-      </main>
-    
-      <!-- <footer class="pt-4 my-md-5 pt-md-5 border-top">
-        <div class="row">
-          <div class="col-6 col-md">
-            <h5>Features</h5>
-            <ul class="list-unstyled text-small">
-              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Cool stuff</a></li>
-              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Random feature</a></li>
-              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Team feature</a></li>
-              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Stuff for developers</a></li>
-              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Another one</a></li>
-              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Last time</a></li>
-            </ul>
-          </div>
-          <div class="col-6 col-md">
-            <h5>Resources</h5>
-            <ul class="list-unstyled text-small">
-              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Resource</a></li>
-              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Resource name</a></li>
-              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Another resource</a></li>
-              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Final resource</a></li>
-            </ul>
-          </div>
-          <div class="col-6 col-md">
-            <h5>About</h5>
-            <ul class="list-unstyled text-small">
-              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Team</a></li>
-              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Locations</a></li>
-              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Privacy</a></li>
-              <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Terms</a></li>
-            </ul>
-          </div>
-        </div>
-      </footer> -->
-    </div>  
-    <%= javascript_include_tag "application" %>      
-  </body>
-</html>
+  <%= yield %>
+<% end %>
