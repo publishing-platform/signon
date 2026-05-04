@@ -114,10 +114,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@publishing-platform/publishing-platform-publishing-components@^0.9.0":
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/@publishing-platform/publishing-platform-publishing-components/-/publishing-platform-publishing-components-0.9.0.tgz#879d31c5b8fb484b57fa0cdf983bf02b76cd05ff"
-  integrity sha512-DxrobuBx1Qn3uD+iNFocDj4ZgIgRbGB3n9Q6X5fHJ7XNaDMQtR8AOiumcJHdfEyXOvy2mPXShJD/2UCcU3Wh1A==
+"@publishing-platform/publishing-platform-publishing-components@^0.9.1":
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/@publishing-platform/publishing-platform-publishing-components/-/publishing-platform-publishing-components-0.9.1.tgz#c75927f753491cb118ac772d00496990bb4ce024"
+  integrity sha512-CJINUYgjbJcvzBH6dVCodvHAoaI8Fe49kymX8x8aUSfPRJKrJNAn2ahJweIZwX6xQqfsTm1DhYX+TsbwUPLVWg==
   dependencies:
     bootstrap "^5.3.3"
     sortablejs "^1.15.6"
