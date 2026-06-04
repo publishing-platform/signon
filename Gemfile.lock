@@ -272,7 +272,7 @@ GEM
       rubocop-rails (= 2.35.3)
       rubocop-rake (= 0.7.1)
       rubocop-rspec (= 3.9.0)
-    publishing_platform_test (0.2.3)
+    publishing_platform_test (0.2.4)
       brakeman (>= 5.0.2)
       capybara (>= 3.36)
       puma
@@ -395,7 +395,7 @@ GEM
       lint_roller (~> 1.1)
       rubocop (~> 1.81)
     ruby-progressbar (1.13.0)
-    rubyzip (3.3.0)
+    rubyzip (3.3.1)
     sass-embedded (1.86.3-x86_64-linux-gnu)
       google-protobuf (~> 4.30)
     securerandom (0.4.1)
