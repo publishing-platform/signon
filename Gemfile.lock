@@ -268,7 +268,7 @@ GEM
       rubocop-rails (= 2.36.0)
       rubocop-rake (= 0.7.1)
       rubocop-rspec (= 3.10.2)
-    publishing_platform_test (0.2.5)
+    publishing_platform_test (0.2.7)
       brakeman (>= 5.0.2)
       capybara (>= 3.36)
       puma
