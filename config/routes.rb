@@ -68,6 +68,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get "/api/users" => "api/users#index"
+
   get "/signin-required" => "root#signin_required"
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
