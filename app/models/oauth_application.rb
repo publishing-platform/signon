@@ -42,6 +42,10 @@ class OauthApplication < ApplicationRecord
     end
   end
 
+  def signon?
+    name == "Signon API"
+  end
+
 private
 
   def create_signin_permission

@@ -91,4 +91,18 @@ RSpec.describe OauthApplication, type: :model do
       expect(described_class.ordered_by_name).to eq [application_named_bar, application_named_foo, application_named_qux]
     end
   end
+
+  describe "#signon?" do
+    it "returns true if the name is correct" do
+      application = create(:oauth_application, name: "Signon API")
+
+      expect(application.signon?).to be true
+    end
+
+    it "returns false if the name is incorrect" do
+      application = create(:oauth_application, name: "Something else")
+
+      expect(application.signon?).to be false
+    end
+  end
 end
