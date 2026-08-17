@@ -261,8 +261,8 @@ GEM
       rouge
       sprockets (>= 3)
       sprockets-rails
-    publishing_platform_rubocop (0.3.13)
-      rubocop (= 1.88.2)
+    publishing_platform_rubocop (0.3.14)
+      rubocop (= 1.89.0)
       rubocop-ast (= 1.50.0)
       rubocop-capybara (= 2.23.0)
       rubocop-rails (= 2.36.0)
@@ -366,7 +366,7 @@ GEM
       rspec-mocks (>= 3.13.0, < 5.0.0)
       rspec-support (>= 3.13.0, < 5.0.0)
     rspec-support (3.13.7)
-    rubocop (1.88.2)
+    rubocop (1.89.0)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
