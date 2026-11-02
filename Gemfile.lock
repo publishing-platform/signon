@@ -342,7 +342,7 @@ GEM
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
     rexml (3.4.4)
-    rotp (6.3.0)
+    rotp (6.4.0)
     rouge (5.1.0)
       strscan (~> 3.1)
     rqrcode (3.2.0)
